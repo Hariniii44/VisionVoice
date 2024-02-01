@@ -1,0 +1,46 @@
+/* popup.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
+    overflow: hidden; /* Prevent page scrolling */
+
+  }
+  
+  #app {
+    max-width: 3000px;
+    margin: 0 auto;
+    /* position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh; /* Full height of the viewport */
+    /* width: 25vw; /* 1/4th of the viewport width */
+    /* background-color: white; Set background color as needed */
+    /* box-shadow: -4px 0 8px rgba(0, 0, 0, 0.1); Optional: Add box shadow for a visual separation */
+    /* display: flex;
+    flex-direction: column;   */
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+  }
+  
+  button {
+    padding: 8px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  

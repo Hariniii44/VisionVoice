@@ -1,0 +1,18 @@
+{
+    "manifest_version": 3,
+    "name": "Svelte Extension",
+    "version": "1.0",
+    "description": "A simple Svelte extension",
+    "action": {
+        "default_popup": "popup.html"
+      },
+    "icons": {
+        "16": "extension/images/icon-16.png",
+        "32": "extension/images/icon-32.png",
+        "48": "extension/images/icon-48.png",
+        "128": "extension/images/icon-128.png"
+      },
+    "permissions": [
+      "activeTab"
+    ]
+  }
