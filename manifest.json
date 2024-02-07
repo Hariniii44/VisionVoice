@@ -1,0 +1,11 @@
+{
+	"name": "Vision Voice",
+	"version": "1.0.0",
+	"description": "First Version For Vision Voice",
+	"manifest_version": 3,
+	"author": "Tharanesh",
+	"action": {
+		"default_popup": "index.html",
+		"default_title": "Vision Voice"
+	}
+}
