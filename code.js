@@ -48,9 +48,9 @@ const {
     let fileContent = "";
     
     
-    fs.readFile(filePath, 'utf-8', async (err, data) => {
-      if (err) {
-        console.error('Error reading the file:', err);
+    fs.readFile(filePath, 'utf-8', async (e, data) => {
+      if (e) {
+        console.error('An Error occurred');
         return;
       }
       
@@ -78,10 +78,10 @@ const {
 
       fs.writeFile(filePath2, textToWrite, 'utf-8', (err) => {
         if (err) {
-          console.error('Error writing to the file:', err);
+          console.error('An Error occurred');
           return;
         }
-        console.log('Successfully wrote to the file:', filePath2);
+        console.log('File has been written to');
       });
       
     });
