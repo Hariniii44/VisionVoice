@@ -1,0 +1,17 @@
+What is a Sequence?
+Infinite or Finite
+In Order
+Like a Set
+Notation
+A Rule
+As a Formula
+Many Rules
+Notation
+Special Sequences
+Arithmetic Sequences
+Geometric Sequences
+Triangular Numbers
+Square Numbers
+Cube Numbers
+Fibonacci Sequence
+Series and Partial Sums

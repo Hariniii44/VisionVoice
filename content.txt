@@ -1,4 +1,103 @@
-Ratios are reduced just like fractions are. Both sides are divided by the same amount to find the simplest form:15:18        ÷3       =  5:65:6 is the simplest form, as it can't be divided further.The ratio can also be reduced to a 1:n form. This is usually the most helpful as it allows the ratio to be seen clearly. To reduce a fraction to this form, divide both sides by the smallest side.E.g.  3:27 ---> 1:9
-This formula triangle can be used in questions such as:"A necklace is made using blue and red beads in the ratio 7:2, if 30 blue beads are used, how many red beads are used?"
-The ratio must always be the right way around, the first number in the ratio always going on the top (A:B).The above question can be worked out:A = Number of blue beadsB = Number of red beadsA/B = 3.5 (7/2)The part of the triangle that is covered up is the value that we need, which in this case would be 'B'. With the B covered up we are left with 'A' divided by 'A/B'. this would be 30 ÷ 3.5 = 8.57 (2dp)
-In these types of questions, an amount is split into a certain ratio.For example:"£21,000 is to be split between Emma and Jake in the ratio 4:3. find the two amounts that they each get"To do this type of question: The two sides of the ratio have to be added up first (4+3=7). This will give you the total parts that the £21,000 have to be split into.Find how much one part is worth. To do this, divide the total amount by the amount of parts (£21,000 ÷ 7 = £3,000)Find out how much each person gets:                                                                  Emma: 4 parts:  £3,000 x 4 = £12,000                                                               Jake: 3 parts: £3,000 x 3 = £9,000
+You can read a gentle introduction to Sequences in Common Number Patterns.
+A Sequence is  a list of things (usually numbers) that are in order.
+
+When the sequence goes on forever it is called an infinite sequence,
+otherwise it is a finite sequence
+{1, 2, 3, 4, ...} is a very simple sequence (and it is an infinite sequence)
+{20, 25, 30, 35, ...} is also an infinite sequence
+{1, 3, 5, 7} is the sequence of the first 4 odd numbers (and is a finite sequence)
+{4, 3, 2, 1} is 4 to 1 backwards
+{1, 2, 4, 8, 16, 32, ...} is an infinite sequence where every term doubles
+{a, b, c, d, e} is the sequence of the first 5 letters alphabetically
+{f, r, e, d} is the sequence of letters in the name "fred"
+{0, 1, 0, 1, 0, 1, ...} is the sequence of alternating 0s and 1s (yes they are in order, it is an alternating order in this case)
+When we say the terms are "in order", we are free to define what order that is! They could go forwards, backwards ... or they could alternate ... or any type of order we want!
+A Sequence is  like a Set, except:
+Example: {0, 1, 0, 1, 0, 1, ...} is the sequence of alternating 0s and 1s.
+The set is just {0,1}
+The curly brackets { } are sometimes called "set brackets" or "braces".
+A Sequence usually has a Rule, which is a way to find the value of each term.
+Example: the sequence {3, 5, 7, 9, ...} starts at 3 and jumps 2 every time:
+
+Saying "starts at 3 and jumps 2 every time" is fine, but it doesn't help us calculate the:
+So, we want a formula with "n" in it (where n is any term number).
+Firstly, we can see the sequence goes up 2 every time, so we can guess that a Rule is something like "2 times n" (where "n" is the term number). Let's test it out:
+Test Rule: 2n
+That nearly worked ... but it is too low by 1 every time, so let us try changing it to:
+Test Rule: 2n+1
+That Works!
+So instead of saying "starts at 3 and jumps 2 every time" we write this:
+2n+1
+Now we can  calculate, for example, the 100th term:
+2 × 100 + 1 = 201
+But mathematics is so powerful we can find more than one Rule that works for any sequence.
+We have just shown a Rule for {3, 5, 7, 9, ...} is: 2n+1
+And so we get: {3, 5, 7, 9, 11, 13, ...}
+But can we find another rule?
+How about "odd numbers without a 1 in them":
+And we  get: {3, 5, 7, 9, 23, 25, ...}
+A completely different sequence!
+And we could find more rules that match {3, 5, 7, 9, ...}. Really we could.
+So it is best to say "A Rule" rather than "The Rule" (unless we know it is the right Rule).
+To make it easier to use rules, we often use this special style:
+Example: to mention the "5th term" we write: x5
+So a rule for {3, 5, 7, 9, ...} can be written as an equation like this:
+xn = 2n+1
+And to calculate the 10th term we can write:
+x10 =  2n+1 = 2×10+1 = 21
+Can you  calculate x50 (the 50th term) doing this?
+Here is another example:
+Calculations:
+Answer:
+{an} = { -1, 1/4, -1/27, 1/256, ... }
+Now let's look at some special sequences, and their rules.
+In an Arithmetic Sequence the difference between one term and the next is   a constant.
+In other words, we just add some value each time ... on to infinity.
+This sequence has a difference of 3 between each number.
+Its Rule is xn = 3n-2
+In General we can write an arithmetic sequence like this:
+{a, a+d, a+2d, a+3d, ... }
+where:
+And we can make the rule:
+xn = a + d(n-1)
+(We use "n-1" because d is not used in the 1st term).
+In a Geometric Sequence each term is found by multiplying the previous term by a constant.
+This sequence has a factor of 2 between each number.
+Its Rule is xn = 2n
+In General we can write a geometric sequence like this:
+{a, ar, ar2, ar3, ... }
+where:
+Note: r should not be 0.
+And  the rule is:
+xn = ar(n-1)
+(We use "n-1" because ar0 is the 1st term)
+The Triangular Number Sequence is generated from a pattern of dots which form a
+              triangle:
+
+By adding another row of dots and counting all the dots we can find
+              the next number of the sequence.
+But it is easier to use this Rule:
+xn = n(n+1)/2
+Example:
+The next number is made by squaring where it is in the pattern.
+Rule is xn = n2
+ 
+The next number is made by cubing where it is in the pattern.
+Rule is xn = n3
+ 
+This is the Fibonacci Sequence
+The next number is found by adding the two numbers before it together:
+Rule is  xn = xn-1 + xn-2
+That rule is interesting because it depends on the values of the previous two terms.
+Rules like that are called recursive formulas.
+The Fibonacci Sequence is numbered from 0 onwards like this:
+ 
+Example:  term "6" is calculated like this:
+ x6 = x6-1 + x6-2 = x5 + x4 = 5 + 3 = 8
+Now you know about sequences, the next thing to learn about is how to sum them up. Read our page on Partial Sums.
+When we sum up just part of a sequence it is called a Partial Sum.
+But a sum of an infinite sequence it is called a "Series" (it sounds like another name for sequence, but it is actually a sum). See  Infinite Series.
+Sequence: {1, 3, 5, 7, ...}
+Series: 1 + 3 + 5 + 7 + ...
+Partial Sum of first 3 terms: 1 + 3 + 5
+ 
