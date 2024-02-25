@@ -40,22 +40,52 @@ const {
       },
     ];
 
-    let paragraph = "The decline of the Indus Valley civilization in the mid-second millennium BCE led to the arrival of the Aryans, speakers of Indo-European languages originating from Central Asia. They migrated to India as semi-nomadic pastoral clans, establishing themselves as rulers over the indigenous Dravidian populations, giving rise to the Vedic Age, a significant period in Indian history that saw the rise of early Hinduism and the caste system.";
+    const fs = require('fs');
 
-    let text1 = "Simplify the following text in a simple and concise manner, '" + paragraph + "'";
-  
-    const parts = [
-      {text: text1},
-    ];
-  
-    const result = await model.generateContent({
-      contents: [{ role: "user", parts }],
-      generationConfig,
-      safetySettings,
+    
+    let filePath = 'alan_wake.txt';
+
+    let fileContent = "";
+    
+    
+    fs.readFile(filePath, 'utf-8', async (err, data) => {
+      if (err) {
+        console.error('Error reading the file:', err);
+        return;
+      }
+      
+      fileContent = data;
+
+      let paragraph = fileContent;
+
+      let text1 = "Explain the following text in a simple and concise manner, '" + paragraph + "'";
+
+      const parts = [
+        {text: text1},
+      ];
+    
+      let result = await model.generateContent({
+        contents: [{ role: "user", parts }],
+        generationConfig,
+        safetySettings,
+      });
+    
+      let response = result.response;
+
+      let textToWrite = response.text();
+
+      let filePath2 = "summarized_content.txt";
+
+      fs.writeFile(filePath2, textToWrite, 'utf-8', (err) => {
+        if (err) {
+          console.error('Error writing to the file:', err);
+          return;
+        }
+        console.log('Successfully wrote to the file:', filePath2);
+      });
+      
     });
-  
-    const response = result.response;
-    console.log(response.text());
+    
   }
   
   run();
