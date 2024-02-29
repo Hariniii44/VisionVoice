@@ -27,6 +27,7 @@ async function start() {
 	const names = await page.evaluate(() => {
 		return Array.from(document.querySelectorAll("h2")).map(x => x.textContent)
 	})
+	names.splice((names.length-1),1)
 	await fs.writeFile(fileName, names.join("\r\n"))
 	console.log('Wrote to text file');
 	await browser.close()

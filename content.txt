@@ -1,103 +1,18 @@
-You can read a gentle introduction to Sequences in Common Number Patterns.
-A Sequence is  a list of things (usually numbers) that are in order.
+A system of linear equation comprises two or more linear equations. The solution of a linear system is the ordered pair that is a solution to all equations in the system.
+One way of solving a linear system is by graphing. The solution to the system will then be in the point in which the two equations intersect.
+Example
+Solve the following system of linear equations
+{y=2x+4y=3x+2\left\{\begin{matrix} y=2x+4\\ y=3x+2 \end{matrix}\right.
 
-When the sequence goes on forever it is called an infinite sequence,
-otherwise it is a finite sequence
-{1, 2, 3, 4, ...} is a very simple sequence (and it is an infinite sequence)
-{20, 25, 30, 35, ...} is also an infinite sequence
-{1, 3, 5, 7} is the sequence of the first 4 odd numbers (and is a finite sequence)
-{4, 3, 2, 1} is 4 to 1 backwards
-{1, 2, 4, 8, 16, 32, ...} is an infinite sequence where every term doubles
-{a, b, c, d, e} is the sequence of the first 5 letters alphabetically
-{f, r, e, d} is the sequence of letters in the name "fred"
-{0, 1, 0, 1, 0, 1, ...} is the sequence of alternating 0s and 1s (yes they are in order, it is an alternating order in this case)
-When we say the terms are "in order", we are free to define what order that is! They could go forwards, backwards ... or they could alternate ... or any type of order we want!
-A Sequence is  like a Set, except:
-Example: {0, 1, 0, 1, 0, 1, ...} is the sequence of alternating 0s and 1s.
-The set is just {0,1}
-The curly brackets { } are sometimes called "set brackets" or "braces".
-A Sequence usually has a Rule, which is a way to find the value of each term.
-Example: the sequence {3, 5, 7, 9, ...} starts at 3 and jumps 2 every time:
-
-Saying "starts at 3 and jumps 2 every time" is fine, but it doesn't help us calculate the:
-So, we want a formula with "n" in it (where n is any term number).
-Firstly, we can see the sequence goes up 2 every time, so we can guess that a Rule is something like "2 times n" (where "n" is the term number). Let's test it out:
-Test Rule: 2n
-That nearly worked ... but it is too low by 1 every time, so let us try changing it to:
-Test Rule: 2n+1
-That Works!
-So instead of saying "starts at 3 and jumps 2 every time" we write this:
-2n+1
-Now we can  calculate, for example, the 100th term:
-2 × 100 + 1 = 201
-But mathematics is so powerful we can find more than one Rule that works for any sequence.
-We have just shown a Rule for {3, 5, 7, 9, ...} is: 2n+1
-And so we get: {3, 5, 7, 9, 11, 13, ...}
-But can we find another rule?
-How about "odd numbers without a 1 in them":
-And we  get: {3, 5, 7, 9, 23, 25, ...}
-A completely different sequence!
-And we could find more rules that match {3, 5, 7, 9, ...}. Really we could.
-So it is best to say "A Rule" rather than "The Rule" (unless we know it is the right Rule).
-To make it easier to use rules, we often use this special style:
-Example: to mention the "5th term" we write: x5
-So a rule for {3, 5, 7, 9, ...} can be written as an equation like this:
-xn = 2n+1
-And to calculate the 10th term we can write:
-x10 =  2n+1 = 2×10+1 = 21
-Can you  calculate x50 (the 50th term) doing this?
-Here is another example:
-Calculations:
-Answer:
-{an} = { -1, 1/4, -1/27, 1/256, ... }
-Now let's look at some special sequences, and their rules.
-In an Arithmetic Sequence the difference between one term and the next is   a constant.
-In other words, we just add some value each time ... on to infinity.
-This sequence has a difference of 3 between each number.
-Its Rule is xn = 3n-2
-In General we can write an arithmetic sequence like this:
-{a, a+d, a+2d, a+3d, ... }
-where:
-And we can make the rule:
-xn = a + d(n-1)
-(We use "n-1" because d is not used in the 1st term).
-In a Geometric Sequence each term is found by multiplying the previous term by a constant.
-This sequence has a factor of 2 between each number.
-Its Rule is xn = 2n
-In General we can write a geometric sequence like this:
-{a, ar, ar2, ar3, ... }
-where:
-Note: r should not be 0.
-And  the rule is:
-xn = ar(n-1)
-(We use "n-1" because ar0 is the 1st term)
-The Triangular Number Sequence is generated from a pattern of dots which form a
-              triangle:
-
-By adding another row of dots and counting all the dots we can find
-              the next number of the sequence.
-But it is easier to use this Rule:
-xn = n(n+1)/2
-Example:
-The next number is made by squaring where it is in the pattern.
-Rule is xn = n2
- 
-The next number is made by cubing where it is in the pattern.
-Rule is xn = n3
- 
-This is the Fibonacci Sequence
-The next number is found by adding the two numbers before it together:
-Rule is  xn = xn-1 + xn-2
-That rule is interesting because it depends on the values of the previous two terms.
-Rules like that are called recursive formulas.
-The Fibonacci Sequence is numbered from 0 onwards like this:
- 
-Example:  term "6" is calculated like this:
- x6 = x6-1 + x6-2 = x5 + x4 = 5 + 3 = 8
-Now you know about sequences, the next thing to learn about is how to sum them up. Read our page on Partial Sums.
-When we sum up just part of a sequence it is called a Partial Sum.
-But a sum of an infinite sequence it is called a "Series" (it sounds like another name for sequence, but it is actually a sum). See  Infinite Series.
-Sequence: {1, 3, 5, 7, ...}
-Series: 1 + 3 + 5 + 7 + ...
-Partial Sum of first 3 terms: 1 + 3 + 5
- 
+The two lines appear to intersect in (2, 8)
+It's a good idea to always check your graphical solution algebraically by substituting x and y in your equations with the ordered pair
+\underline{y=2x+4} \\ {\color{green} 8}\overset{?}{=} 2\cdot {\color{green} 2}+4\underline{y=2x+4} \\ {\color{green} 8}\overset{?}{=} 2\cdot {\color{green} 2}+4
+8=88=8
+\underline{y=3x+2}\underline{y=3x+2}
+{\color{green} 8}\overset{?}{=}3\cdot {\color{green} 2}+2{\color{green} 8}\overset{?}{=}3\cdot {\color{green} 2}+2
+8=88=8
+A linear system that has exactly one solution is called a consistent independent system. Consistent means that the lines intersect and independent means that the lines are distinct.
+Linear systems composes of parallel lines that have the same slope but different y-intersect do not have a solution since the lines won't intersect. Linear systems without a solution are called inconsistent systems.
+Linear systems composed of lines that have the same slope and the y-intercept are said to be consistent dependent systems. Consistent dependent systems have infinitely many solutions since the lines coincide.
+Solve the linear system graphically
+\left\{\begin{matrix} 2y - 4x = 2 \\ y = -x + 4\\ \end{matrix}\right.\left\{\begin{matrix} 2y - 4x = 2 \\ y = -x + 4\\ \end{matrix}\right.
