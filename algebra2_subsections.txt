@@ -1,7 +1,5 @@
-Trigonometric functions
-Angles
-Law of sines
-Law of cosines
-Circular functions
-Inverse functions
-Trigonometric identities
+Basic knowledge of polynomial functions
+Remainder and factor theorems
+Roots and zeros
+Descartes' rule of sign
+Composition of functions

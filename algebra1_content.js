@@ -1,12 +1,17 @@
 const puppeteer = require('puppeteer')
+//provides access to puppeteer
 const fs = require('fs/promises')
+//this import provides the asynchronous version of the file system functions
 const ds = require('fs')
+//this import provides the synchronous version of the file system functions
 
 let fileName = "content.txt"
+//specifies the output text file
 
 async function start() {
-
+//the beginning of the async function start, allowing the await function to be called
   ds.access(fileName, ds.constants.F_OK, (e) => {
+	//this function checks and logs if the above file exists or not
 		if (e) {
 			console.error('File does not exist');
 		} else {
@@ -21,16 +26,21 @@ async function start() {
 	});
 
     const browser = await puppeteer.launch()
+	//the browser is launched
     const page = await browser.newPage()
     await page.goto("https://www.mathplanet.com/education/algebra-1/systems-of-linear-equations-and-inequalities/graphing-linear-systems")
-
+	//a new page is created which goes to the specified URL
     const names = await page.evaluate(() => {
         return Array.from(document.querySelectorAll(".body p")).map(x => x.textContent)
+		//the textcontent from the specific CSS selector (to the webpage) is selected and returned as an array
     })
     await fs.writeFile(fileName, names.join("\r\n"))
+	//the array is written to a file with each member written to one line
     console.log('Wrote to file');
     await browser.close()
+	//the console logs that the file has been written to and the headless browser is closed
 }
 
 start()
+//the async function start() is called when this file is run
 
