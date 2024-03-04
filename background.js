@@ -19,7 +19,7 @@ function openExtensionWindow() {
 }
 
 // Open the extension window when the extension is first installed or updated
-// chrome.runtime.onInstalled.addListener(function() {
+chrome.runtime.onInstalled.addListener(function() {
     openExtensionWindow();
 });
 

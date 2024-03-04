@@ -44,7 +44,7 @@ function startSpeechRecognition() {
                 if (isRecognizing) {
                     recognition.start();
                 }
-            }, 500);
+            }, 100);
             // recognition.start();     //restart to keep recog continuous
         });
 
