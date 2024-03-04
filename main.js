@@ -53,6 +53,8 @@ function startSpeechRecognition() {
     }
 }
 
+startSpeechRecognition(); //start when the window is opened
+
 function handleResponse(text) {
     let replyP;
 
@@ -108,6 +110,6 @@ function textToSpeech(text) {
     window.speechSynthesis.speak(utterance);
 }
 
-document.getElementById('startRecognitionButton').addEventListener('click', startSpeechRecognition);
+// document.getElementById('startRecognitionButton').addEventListener('click', startSpeechRecognition);
 
 
