@@ -11,7 +11,7 @@ function openExtensionWindow() {
         chrome.tabs.onUpdated.addListener(function onTabUpdated(tabId, changeInfo, updatedTab) {
             if (tabId === window.tabs[0].id && changeInfo.status === 'complete') {
                 // Start speech recognition when the extension window is fully loaded
-                startSpeechRecognition();
+                // startSpeechRecognition();
                 chrome.tabs.onUpdated.removeListener(onTabUpdated);
             }
         });

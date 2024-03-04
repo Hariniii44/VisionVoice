@@ -20,32 +20,28 @@ function startSpeechRecognition() {
         let p = document.createElement('p');
 
         recognition.addEventListener('result', (e) => {
-            console.log(e);
+            // console.log(e);
             const text = Array.from(e.results)
                 .map(result => result[0])
                 .map(result => result.transcript)
                 .join('');
 
-            // let p = document.createElement('p');
             p.innerText = text;
             texts.appendChild(p);
 
             if (e.results[0].isFinal) {
-                recognition.stop();    //stop recog after getting a final result
                 p = document.createElement('p');
                 handleResponse(text);
             }
-            console.log('recognized text:', text);
         });
 
         recognition.addEventListener('end', ()=> {
-            isRecognizing = false;
-            setTimeout(() => {
-                if (isRecognizing) {
+            // isRecognizing = false;
+            if (isRecognizing) {
+                setTimeout(() => {
                     recognition.start();
-                }
-            }, 100);
-            // recognition.start();     //restart to keep recog continuous
+                }, 100);
+            }
         });
 
         isRecognizing = true;
@@ -53,26 +49,24 @@ function startSpeechRecognition() {
     }
 }
 
-startSpeechRecognition(); //start when the window is opened
-
 function handleResponse(text) {
     let replyP;
 
     if (text.includes('hello')) {
         replyP = createReply('Hi');
         texts.appendChild(replyP);
-        textToSpeech('Welcome to vision voice. which website would you like to go to?');
+        textToSpeech('Welcome to vision voice. which website would you like to go to? You can either go to maths is fun, oxnotes, mathplanet or pauls online notes');
     }
 
-    if (text.includes('maths is fun')) {
+    else if (text.includes('maths is fun')) {
         replyP = createReply('opening mathsisfun');
         texts.appendChild(replyP);
         textToSpeech('Welcome to maths is fun, these are the sections you can go to in this website.');
-        chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://www.mathsisfun.com/'});
+        chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://www.mathsisfun.com/algebra/index.html'});
         // window.open('https://www.mathsisfun.com/')
     }
 
-    if (text.includes('aux notes') || text.includes('ox notes')) {
+    else if (text.includes('aux notes') || text.includes('ox notes')) {
         replyP = createReply('opening oxnotes');
         texts.appendChild(replyP);
         textToSpeech('Welcome oxnotes, these are the sections you can go to in this website.');
@@ -80,7 +74,7 @@ function handleResponse(text) {
         // window.open('https://www.oxnotes.com/igcse-mathematics.html')
     }
 
-    if (text.includes('mathplanet') || text.includes('math planet')) {
+    else if (text.includes('mathplanet') || text.includes('math planet')) {
         replyP = createReply('opening mathplanet website');
         texts.appendChild(replyP);
         textToSpeech('Welcome mathplanet website, these are the sections you can go to in this website.');
@@ -88,14 +82,17 @@ function handleResponse(text) {
         // window.open('https://www.mathplanet.com/')
     }
 
-    if (text.includes('math notes') || text.includes('mathnotes') || text.includes('maths notes')) {
+    else if (text.includes('math notes') || text.includes('mathnotes') || text.includes('maths notes')) {
         replyP = createReply('opening math notes website');
         texts.appendChild(replyP);
         textToSpeech('Welcome mathplanet website, these are the sections you can go to in this website.');
         chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://tutorial.math.lamar.edu/Classes/Alg/Alg.aspx'});
         // window.open('https://tutorial.math.lamar.edu/Classes/Alg/Alg.aspx')
     }
-    startSpeechRecognition();
+
+    else {
+        textToSpeech('Your voice command is not clear. Please repeat.');
+    }
 }
 
 function createReply(replyText) {
@@ -109,6 +106,8 @@ function textToSpeech(text) {
     const utterance = new SpeechSynthesisUtterance(text);
     window.speechSynthesis.speak(utterance);
 }
+
+startSpeechRecognition(); //start when the window is opened
 
 // document.getElementById('startRecognitionButton').addEventListener('click', startSpeechRecognition);
 
