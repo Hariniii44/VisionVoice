@@ -1,9 +1,16 @@
-const { execFile } = require('child_process');
+// Import the scraping script
+const { start, emptyFolder } = require('./oxnotes_content.js');
 
-execFile('node', ['oxnotes_content.js'], (error, stdout, stderr) => {
-  if (error) {
-    console.error(`Error executing file: ${error}`);
-    return;
-  }
+// Define the folder destination
+const folderDestination = "../Images";
 
-});
+module.exports.emptyFolder = emptyFolder;
+// Call the function to empty the folder
+emptyFolder(folderDestination)
+  .then(() => {
+    // Call the function to start scraping
+    start();
+  })
+  .catch(error => {
+    console.error('An error occurred while emptying the folder:', error);
+  });

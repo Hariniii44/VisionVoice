@@ -1,0 +1,13 @@
+**Gradient of a Graph:**
+
+* The gradient (also known as slope) measures how steep a graph or line is at any given point.
+* A higher gradient means a steeper slope, while a lower gradient means a less steep slope.
+* A negative gradient means the line slopes down from left to right.
+
+**How to Calculate Gradient:**
+
+* Choose two points (x1, y1) and (x2, y2) on the graph.
+* Calculate the change in y-coordinate (y2 - y1) and the change in x-coordinate (x2 - x1).
+* Divide the change in y by the change in x: (y2 - y1) / (x2 - x1)
+
+This result is the gradient of the straight line between the two chosen points.
