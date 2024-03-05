@@ -7,7 +7,7 @@ const ds = require('fs')
 const path = require('path')
 //imports the path module
 
-let fileName = "content.txt"
+let fileName = "../Text_com/content.txt"
 //specifies the output text file
 
 let url = "https://www.mathsisfun.com/algebra/polynomials-dividing.html"

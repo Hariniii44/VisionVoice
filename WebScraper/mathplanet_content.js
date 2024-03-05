@@ -6,7 +6,7 @@ const path = require('path')
 //imports the path module
 const ds = require('fs')
 
-const fileName = "content.txt"
+const fileName = "../Text_com/content.txt"
 //specifies the text file name
 const folderDestination = "../Images"
 //specifies the folder destination

@@ -5,7 +5,7 @@ const fs = require('fs/promises')
 const ds = require('fs')
 //this import provides the synchronous version of the file system functions
 
-let fileName = "oxnotes_links.txt"
+let fileName = "../Text_com/oxnotes_links.txt"
 //specifies the output text file
 
 async function start() {

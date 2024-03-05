@@ -5,8 +5,10 @@ const fs = require('fs/promises')
 const ds = require('fs')
 //this import provides the synchronous version of the file system functions
 
-let fileName = "algebra2_links.txt"
+let fileName = "../Text_com/mathplanet_subsections.txt"
 //specifies the output text file
+
+let url = "https://www.mathplanet.com/education/algebra-1/systems-of-linear-equations-and-inequalities"
 
 async function start() {
 //the beginning of the async function start, allowing the await function to be called
@@ -28,7 +30,7 @@ async function start() {
 	const browser = await puppeteer.launch()
 	//the browser is launched
 	const page = await browser.newPage()
-	await page.goto("https://www.mathplanet.com/education/algebra-2")
+	await page.goto(url)
 //a new page is created which goes to the specified URL
 	const names = await page.evaluate(() => {
 		return Array.from(document.querySelectorAll("#menusubnodes a")).map(x => x.textContent)
