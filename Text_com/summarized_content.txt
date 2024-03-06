@@ -1,13 +1,18 @@
-**Gradient of a Graph:**
+**Graphing Basics:**
 
-* The gradient (also known as slope) measures how steep a graph or line is at any given point.
-* A higher gradient means a steeper slope, while a lower gradient means a less steep slope.
-* A negative gradient means the line slopes down from left to right.
+* The Cartesian coordinate system uses x and y axes to divide the plane into quadrants.
+* Each point is represented by an ordered pair (x, y): x is the horizontal coordinate, y is the vertical coordinate.
+* The point (0, 0) is the origin, where the axes intersect.
 
-**How to Calculate Gradient:**
+**Graphing Equations:**
 
-* Choose two points (x1, y1) and (x2, y2) on the graph.
-* Calculate the change in y-coordinate (y2 - y1) and the change in x-coordinate (x2 - x1).
-* Divide the change in y by the change in x: (y2 - y1) / (x2 - x1)
+* A graph is a set of points that satisfy an equation.
+* To graph an equation, plug in different x values and calculate the corresponding y values to plot points.
+* For simple equations like lines or circles, there are specific methods for graphing.
 
-This result is the gradient of the straight line between the two chosen points.
+**Intercepts:**
+
+* An intercept is a point where a graph crosses an axis.
+* x-intercepts are points where the graph crosses the x-axis (y = 0).
+* y-intercepts are points where the graph crosses the y-axis (x = 0).
+* To find intercepts, set y = 0 for x-intercepts and x = 0 for y-intercepts and solve for the other coordinate.
