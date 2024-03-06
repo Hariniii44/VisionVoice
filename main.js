@@ -62,21 +62,6 @@ function handleResponse(text) {
         texts.appendChild(replyP);
         textToSpeech('Welcome to maths is fun, these are the sections you can go to in this website.');
         chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://www.mathsisfun.com/algebra/index.html'});
-        if (text.includes('go to')) {
-            // Extract the section from the command
-            const section = extractSection(text);
-
-            if (isValidSection(section)) {
-                // Send a message to background.js to handle navigation
-                chrome.runtime.sendMessage({ action: 'navigateToSection', section: section });
-            } else {
-                // Handle invalid section
-                console.log('Invalid section mentioned:', section);
-            }
-            
-            // Send a message to background.js to handle navigation
-            // chrome.runtime.sendMessage({ action: 'navigateToSection', section: section });
-        }
     }
     else if (text.includes('aux notes') || text.includes('ox notes')) {
         replyP = createReply('opening oxnotes');
@@ -99,6 +84,18 @@ function handleResponse(text) {
         chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://tutorial.math.lamar.edu/Classes/Alg/Alg.aspx'});
         // window.open('https://tutorial.math.lamar.edu/Classes/Alg/Alg.aspx')
     }
+    else if (text.includes('go to')) {
+        // Extract the section from the command
+        const section = extractSection(text);
+
+        if (isValidSection(section)) {
+            // Send a message to background.js to handle navigation
+            chrome.runtime.sendMessage({ action: 'navigateToSection', section: section });
+        } else {
+            // Handle invalid section
+            console.log('Invalid section mentioned:', section);
+        }            
+    }
     else {
         textToSpeech('Your voice command is not clear. Please repeat.');
     }
@@ -118,10 +115,19 @@ function textToSpeech(text) {
 
 function extractSection(text) {
     // Implement logic to extract the section from the command
+
     // You might use regular expressions or other methods depending on your use case
     // For simplicity, let's assume the command structure is "go to [section]"
-    const match = text.match(/go to (.+)/i);
+    // const match = text.match(/go to (.+)/i);
+    const match = text.match(/go to (\b(?:The Basics|Exponents|Simplifying|Factoring|Logarithms|Polynomials|Linear Equations)\b)/i);
     return match ? match[1] : ''; // Return the captured section
+}
+
+function isValidSection(section) {
+    // Add logic to check if the extracted section is valid
+    // You might want to compare it against a list of valid sections
+    const validSections = ['The Basics', 'Exponents', 'Simplifying', 'Factoring', 'Logarithms', 'Polynomials', 'Linear Equations'];
+    return validSections.includes(section);
 }
 
 startSpeechRecognition(); //start when the window is opened

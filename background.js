@@ -40,6 +40,7 @@ chrome.runtime.onStartup.addListener(function() {
     });
 });
 
+//opening the tab
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.action === 'openNewTab') {
         chrome.tabs.create({ url: request.url}, function(tab) {
@@ -58,3 +59,54 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         });
     }
 });
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.action === 'navigateToSection') {
+        handleNavigationCommand(request.section);
+    }
+})
+
+function handleNavigationCommand(section) {
+    // Perform actions based on the recognized command
+    switch (section.toLowerCase()) {
+        case 'the basics':
+            // Logic to navigate to 'The Basics' section
+            openSectionUrl('https://www.mathsisfun.com/algebra/introduction.html');
+            break;
+        case 'exponents':
+            // Logic to navigate to 'Exponents' section
+            openSectionUrl('https://example.com/exponents');
+            break;
+        case 'simplifying':
+            // Logic to navigate to 'Simplifying' section
+            openSectionUrl('https://example.com/simplifying');
+            break;
+        case 'factoring':
+            // Logic to navigate to 'Factoring' section
+            openSectionUrl('https://example.com/factoring');
+            break;
+        case 'logarithms':
+            // Logic to navigate to 'Logarithms' section
+            openSectionUrl('https://example.com/logarithms');
+            break;
+        case 'polynomials':
+            // Logic to navigate to 'Polynomials' section
+            openSectionUrl('https://example.com/polynomials');
+            break;
+        case 'linear equations':
+            // Logic to navigate to 'Linear Equations' section
+            openSectionUrl('https://example.com/linear-equations');
+            break;
+        default:
+            // Handle unrecognized command
+            console.log('Unrecognized section:', section);
+            break;
+    }
+}
+
+function openSectionUrl(url) {
+    // Implement logic to open the specified URL
+    chrome.tabs.create({ url: url }, function(tab) {
+        // Additional logic if needed after opening the section URL
+    });
+}
