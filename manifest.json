@@ -6,7 +6,8 @@
     "permissions": [
       "storage",
       "activeTab",
-      "tts"
+      "tts",
+      "fileSystem"
     ],
     "background": {
       "persistent": true,
@@ -15,7 +16,7 @@
     "content_scripts": [
       {
         "matches": ["<all_urls>"],
-        "js": ["content.js"]
+        "js": ["main.js"]
       }
     ]
   }
