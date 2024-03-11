@@ -32,11 +32,15 @@ async function start() {
 	const page = await browser.newPage()
 	await page.goto(section_url)
 //a new page is created which goes to the specified URL
-	const names = await page.evaluate(() => {
+	const mathplanet_links = await page.evaluate(() => {
 		return Array.from(document.querySelectorAll("#menusubnodes a")).map(x => x.textContent)
 		//the textcontent from the specific CSS selector (to the webpage) is selected and returned as an array
 	})
-	await fs.writeFile(fileName, names.join("\r\n"))
+
+	module.exports = mathplanet_links;
+    //exports the mathplanet_links array to be used in other files
+
+	await fs.writeFile(fileName, mathplanet_links.join("\r\n"))
 	//the array is written to a file with each member written to one line
 	console.log('Wrote to text file');
 	await browser.close()

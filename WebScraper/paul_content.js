@@ -58,11 +58,15 @@ async function start() {
 		const page = await browser.newPage()
 		await page.goto(url)
 		//a new page is created which goes to the specified URL
-		const names = await page.evaluate(() => {
+		const paul_content = await page.evaluate(() => {
 			return Array.from(document.querySelectorAll(".content p")).map(x => x.textContent)
 			//the textcontent from the specific CSS selector (to the webpage) is selected and returned as an array
 		})
-		await fs.writeFile(fileName, names.join("\r\n"))
+
+		module.exports = paul_content;
+        //exports the paul_content array to be used in other files
+
+		await fs.writeFile(fileName, paul_content.join("\r\n"))
 		//the array is written to a file with each member written to one line
 		console.log('Wrote to text file')
 

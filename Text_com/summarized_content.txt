@@ -1,18 +1,28 @@
-**Graphing Basics:**
+**Exponential Functions:**
 
-* The Cartesian coordinate system uses x and y axes to divide the plane into quadrants.
-* Each point is represented by an ordered pair (x, y): x is the horizontal coordinate, y is the vertical coordinate.
-* The point (0, 0) is the origin, where the axes intersect.
+* Functions where the variable (x) is in the exponent, instead of the base.
 
-**Graphing Equations:**
+**Graphing Exponential Functions:**
 
-* A graph is a set of points that satisfy an equation.
-* To graph an equation, plug in different x values and calculate the corresponding y values to plot points.
-* For simple equations like lines or circles, there are specific methods for graphing.
+* Plot the points (x, y) where y is the value of the function for different values of x.
+* The shape of the graph depends on the base (a):
+    * Base > 1: Graph rises to the right.
+    * Base < 1: Graph falls to the right.
 
-**Intercepts:**
+**General Form of an Exponential Function:**
 
-* An intercept is a point where a graph crosses an axis.
-* x-intercepts are points where the graph crosses the x-axis (y = 0).
-* y-intercepts are points where the graph crosses the y-axis (x = 0).
-* To find intercepts, set y = 0 for x-intercepts and x = 0 for y-intercepts and solve for the other coordinate.
+```
+y = C * a^x
+```
+* C is a constant.
+* a is the base.
+
+**Exponential Function Properties:**
+
+* The graph never intersects the x-axis, but gets closer as x increases/decreases.
+
+**Rewriting Expression:**
+
+Given: 0.25^x = (1/4)^x
+
+Rewrite as: 0.25^x = 4^(-x)

@@ -8,7 +8,7 @@ const ds = require('fs')
 let fileName = "../Text_com/mathplanet_subsections.txt"
 //specifies the output text file
 
-let url = "https://www.mathplanet.com/education/algebra-1/systems-of-linear-equations-and-inequalities"
+let url = "https://www.mathplanet.com/education/algebra-2/trigonometry"
 
 async function start() {
 //the beginning of the async function start, allowing the await function to be called
@@ -32,11 +32,15 @@ async function start() {
 	const page = await browser.newPage()
 	await page.goto(url)
 //a new page is created which goes to the specified URL
-	const names = await page.evaluate(() => {
+	const mathplanet_subsections = await page.evaluate(() => {
 		return Array.from(document.querySelectorAll("#menusubnodes a")).map(x => x.textContent)
 		//the textcontent from the specific CSS selector (to the webpage) is selected and returned as an array
 	})
-	await fs.writeFile(fileName, names.join("\r\n"))
+
+	module.exports = mathplanet_subsections;
+    //exports the mathplanet_subsections array to be used in other files
+
+	await fs.writeFile(fileName, mathplanet_subsections.join("\r\n"))
 	//the array is written to a file with each member written to one line
 	console.log('Wrote to text file');
 	await browser.close()

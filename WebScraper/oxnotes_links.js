@@ -30,13 +30,17 @@ async function start() {
 	const page = await browser.newPage()
 	await page.goto("https://www.oxnotes.com/igcse-mathematics.html")
 //a new page is created which goes to the specified URL
-	const names = await page.evaluate(() => {
+	const oxnotes_links = await page.evaluate(() => {
 		return Array.from(document.querySelectorAll(".paragraph a")).map(x => x.textContent)
 		//the textcontent from the specific CSS selector (to the webpage) is selected and returned as an array
 	})
-  names.splice(9,4)
 
-	await fs.writeFile(fileName, names.join("\r\n"))
+  	oxnotes_links.splice(9,4)
+
+	module.exports = oxnotes_links;
+	//exports the oxnotes_links array to be used in other files
+
+	await fs.writeFile(fileName, oxnotes_links.join("\r\n"))
 	//the array is written to a file with each member written to one line
 	console.log('Wrote to text file');
 	await browser.close()

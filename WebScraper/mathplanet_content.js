@@ -57,13 +57,14 @@ async function start() {
         await page.goto(url)
 //a new page is created which goes to the specified URL
         
-        const names = await page.evaluate(() => {
+        const mathplanet_content = await page.evaluate(() => {
             return Array.from(document.querySelectorAll(".body p")).map(x => x.textContent)
             //the textcontent from the specific CSS selector (to the webpage) is selected and returned as an array
         })
 
-        
-        await fs.writeFile(fileName, names.join("\r\n"))
+        module.exports = mathplanet_content;
+        //exports the mathplanet_content array to be used in other files
+        await fs.writeFile(fileName, mathplanet_content.join("\r\n"))
         console.log('Wrote text content to file')
         //the array is written to a file with each member written to one line
 
