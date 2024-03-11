@@ -49,13 +49,17 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         chrome.tabs.create({ url: request.url}, function(tab) {
             console.log('new tab is created', tab.id);
 
-            chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-                if (changeInfo.status === 'complete' && tabId === tab.id) {
+            chrome.tabs.onUpdated.addListener(function (updatedTabId, changeInfo, updatedTab) {
+                if (changeInfo.status === 'complete' && updatedTabId === tab.id) {
                     console.log('tab is updated');
-                    chrome.tabs.sendMessage(tab.id, { action: 'startSpeechRecognition', url: request.url });
+                    chrome.tabs.sendMessage(tab.id, { action: 'tabUpdated', url: request.url }, function(response) {
+                        console.log('Message sent to content script');
+                    });
                 }
             });
         });
     }
 });
+
+
 
