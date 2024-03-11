@@ -83,6 +83,9 @@ const {
       let filePath2 = "../Text_com/summarized_content.txt";
       //the file name of the output text file
 
+      module.exports = textToWrite;
+      //exports the texttoWrite string to be used in other files
+
       fs.writeFile(filePath2, textToWrite, 'utf-8', (e) => {
         if (e) {
           console.error('An Error happened whilst writing');
