@@ -5,6 +5,9 @@ const texts = document.querySelector('.texts');
 let recognition;
 let isRecognizing = false;
 let shouldReadContent = false;
+let sectionCount = 0;
+goToSectionBoolean = false;
+
 
     output.innerHTML = slider.value;
 
@@ -24,15 +27,15 @@ function startSpeechRecognition() {
             // console.log(e);
             const text = Array.from(e.results)
                 .map(result => result[0])
-                .map(result => result.transcript)
+                .map(result => result.transcript.toLowerCase())
                 .join('');
 
-            p.innerText = text;
+            p.innerText = text.toLowerCase(); 
             texts.appendChild(p);
 
             if (e.results[0].isFinal) {
                 p = document.createElement('p');
-                handleResponse(text);
+                handleResponse(text.toLowerCase()); // pass lowercase text to handleResponse function
             }
         });
 
@@ -61,13 +64,10 @@ function handleResponse(text) {
     else if (text.includes('maths is fun')) {
         replyP = createReply('opening mathsisfun');
         texts.appendChild(replyP);
-        textToSpeech('Welcome to maths is ');  //fun, these are the sections you can go to in this website. The Basics, Exponents , Simplifying, Factoring, Logarithms, Polynomials, Linear Equations, Quadratic Equations, Solving Word Questions, Functions, Sequences and Series
-        // shouldReadContent = true;
-        chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://www.mathsisfun.com/algebra/index.html'}, function() {
-            //shouldReadContent = true;
-        });
+        textToSpeech('Welcome to maths is fun.');  //these are the sections you can go to in this website. The Basics, Exponents , Simplifying, Factoring, Logarithms, Polynomials, Linear Equations, Quadratic Equations, Solving Word Questions, Functions, Sequences and Series
+        chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://www.mathsisfun.com/algebra/index.html'});
     }
-    else if (text.includes('aux notes') || text.includes('ox notes')) {
+    else if (text.includes('aux notes') || text.includes('Ox notes') || text.includes('ox notes')) {
         replyP = createReply('opening oxnotes');
         texts.appendChild(replyP);
         textToSpeech('Welcome to oxnotes, these are the sections you can go to in this website.');
@@ -77,18 +77,30 @@ function handleResponse(text) {
         replyP = createReply('opening mathplanet website');
         texts.appendChild(replyP);
         textToSpeech('Welcome to mathplanet website, these are the sections you can go to in this website.');
-        chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://www.mathplanet.com/'});
+        chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://www.mathplanet.com/education/algebra-2'});
     }
     else if (text.includes('online notes') || text.includes('pauls online notes') || text.includes('paulsonlinenotes')) {
-        replyP = createReply('opening math notes website');
+        replyP = createReply('opening pauls online notes website');
         texts.appendChild(replyP);
         textToSpeech('Welcome to pauls online notes, these are the sections you can go to in this website.');
         chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://tutorial.math.lamar.edu/Classes/Alg/Alg.aspx'});
-    }
-    else {
-        goToSection(text);
+    }    
+    if (text.includes('the basics') || text.includes('exponents') || text.includes('simplifying') || text.includes('factoring') || text.includes('logarithms') || text.includes('polynomials') || text.includes('linear equations') || text.includes('quadratic equations') || text.includes('solving word questions') || text.includes('functions') || text.includes('sequences and series')) {
+        if (goToSectionBoolean) {
+            goToSection(text);
+        } else {
+            const userInput = text.toLowerCase(); 
+            // assign userInput to a variable
+            console.log('User Input:', userInput);
+        }
+    } else {
+        const userInput = text.toLowerCase(); 
+        // assign userInput to a variable
+        console.log('User Input:', userInput);
     }
 }
+
+
 
 function goToSection(text) {
     const section = extractSection(text);
@@ -119,8 +131,14 @@ function goToSection(text) {
             content = 'This is the content for Sequences and Series section.';
         }
 
-        textToSpeech(content);
-        startSpeechRecognition();
+        textToSpeech(content , () => {
+            sectionCount++;
+            console.log(`Section "${section}" identified ${sectionCount} times.`);
+
+            if (sectionCount >= 1) {
+                return; // Terminate the function
+            }            
+        });
     } else {
         textToSpeech('Invalid section mentioned. Please try again.');
         console.log('Invalid section mentioned:', section);
@@ -170,6 +188,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         const url = request.url; // get the url from the message
         console.log('Received URL:', url);
         startSpeechRecognition();
+    }
+    if (request.action === 'goToSection') {
+        goToSectionBoolean = true;
     }
 });
 
