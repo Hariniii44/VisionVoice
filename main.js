@@ -64,25 +64,25 @@ function handleResponse(text) {
     else if (text.includes('maths is fun')) {
         replyP = createReply('opening mathsisfun');
         texts.appendChild(replyP);
-        textToSpeech('Welcome to maths is fun.');  //these are the sections you can go to in this website. The Basics, Exponents , Simplifying, Factoring, Logarithms, Polynomials, Linear Equations, Quadratic Equations, Solving Word Questions, Functions, Sequences and Series
+        textToSpeech('Welcome to maths is fun. These are the sections you can go to in this website');  
         chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://www.mathsisfun.com/algebra/index.html'});
     }
     else if (text.includes('aux notes') || text.includes('Ox notes') || text.includes('ox notes')) {
         replyP = createReply('opening oxnotes');
         texts.appendChild(replyP);
-        textToSpeech('Welcome to oxnotes, these are the sections you can go to in this website.');
+        textToSpeech('Welcome to oxnotes, these are the sections you can go to in this website. Ratios, LCM and HCF , Factorising Quadratics, Functions, Gradients Graphs and Curves, Stationary Points, Vectors, Pythagoras Theorem , Bounds');
         chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://www.oxnotes.com/igcse-mathematics.html'});
     }
-    else if (text.includes('mathplanet') || text.includes('math planet')) {
+    else if (text.includes('mathplanet') || text.includes('math planet') || text.includes('maths planet')) {
         replyP = createReply('opening mathplanet website');
         texts.appendChild(replyP);
-        textToSpeech('Welcome to mathplanet website, these are the sections you can go to in this website.');
+        textToSpeech('Welcome to mathplanet website, these are the sections you can go to in this website.' ) 
         chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://www.mathplanet.com/education/algebra-2'});
     }
     else if (text.includes('online notes') || text.includes('pauls online notes') || text.includes('paulsonlinenotes')) {
         replyP = createReply('opening pauls online notes website');
         texts.appendChild(replyP);
-        textToSpeech('Welcome to pauls online notes, these are the sections you can go to in this website.');
+        textToSpeech('Welcome to pauls online notes, these are the sections you can go to in this website. Preliminaries in Algebra, Solving Equations and Inequalities, Graphing and Functions, Common Graphs, Polynomial Functions, Exponential and Logarithm Functions, Systems of Equations');
         chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://tutorial.math.lamar.edu/Classes/Alg/Alg.aspx'});
     }    
     if (text.includes('the basics') || text.includes('exponents') || text.includes('simplifying') || text.includes('factoring') || text.includes('logarithms') || text.includes('polynomials') || text.includes('linear equations') || text.includes('quadratic equations') || text.includes('solving word questions') || text.includes('functions') || text.includes('sequences and series')) {
@@ -93,7 +93,17 @@ function handleResponse(text) {
             // assign userInput to a variable
             console.log('User Input:', userInput);
         }
-    } else {
+    }
+    if (text.includes('preliminaries') || text.includes('solving equations') || text.includes('graphing') || text.includes('common graphs') || text.includes('polynomial functions') || text.includes('exponential and logarithm functions') || text.includes('systems of equations')) {
+        if (goToSectionBoolean) {   //chnage this
+            goToSection(text);   //change this
+        } else {
+            const userInput = text.toLowerCase(); 
+            // assign userInput to a variable
+            console.log('User Input:', userInput);
+        }
+    }
+    else {
         const userInput = text.toLowerCase(); 
         // assign userInput to a variable
         console.log('User Input:', userInput);
@@ -108,6 +118,7 @@ function goToSection(text) {
     if (isValidSection(section)) {
         let content = '';
         if (section === 'the basics') {
+            readtextFile('Text_com/mathsisfun_thebasics.txt');
             content = 'This is the content for The Basics section.';
         } else if (section === 'exponents') {
             content = 'This is the content for Exponents section.';
@@ -164,42 +175,157 @@ function createReply(replyText) {
     return replyP;
 }
 
-function textToSpeech(text, callback) {
-    if (recognition && isRecognizing) {
+function startRecognition() {
+    if (!isRecognizing) {
+        if (recognition && recognition.readyState === 'listening') {
+            recognition.start();
+            isRecognizing = true;
+        } else {
+            console.log('Recognition is already in progress');
+        }
+    }
+}
+
+function stopRecognition() {
+    if (recognition && recognition.readyState === 'listening') {
         recognition.stop();
         isRecognizing = false;
+    } else {
+        console.log('Recognition is not in progress');
     }
-    
+}
+
+function textToSpeech(text, callback) {
+    stopRecognition(); // Stop recognition if it's in progress
+
     const utterance = new SpeechSynthesisUtterance(text);
+    utterance.onstart = function() {
+        stopRecognition(); // Stop recognition if it starts during speech synthesis
+    };
     utterance.onend = function() {
         if (callback && typeof callback === 'function') {
             callback();
         }
-        if (recognition) {
-            recognition.start();
-            isRecognizing = true;
-        }
+        // setTimeout(startRecognition, 3000);
+
+        startRecognition(); // Start recognition after speech synthesis ends
     };
+
     window.speechSynthesis.speak(utterance);
 }
 
+
+
+// function textToSpeech(text, callback) {
+//     if (recognition && isRecognizing) {
+//         recognition.stop();
+//         isRecognizing = false;
+//     }
+    
+//     const utterance = new SpeechSynthesisUtterance(text);
+//     utterance.onstart = function() {
+//         if (recognition && recognition.readyState === 'listening') {
+//             recognition.stop();
+//             isRecognizing = false;
+//         }
+//     };
+//     utterance.onend = function() {
+//         if (callback && typeof callback === 'function') {
+//             callback();
+//         }
+//         if (recognition && recognition.readyState !== 'listening') {
+//             recognition.start();
+//             isRecognizing = true;
+//         }
+//         else {
+//             console.log('Recognition is already listening');
+//         }
+//     };
+//     window.speechSynthesis.speak(utterance);
+// }
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.action === 'startSpeechRecognition') {
-        const url = request.url; // get the url from the message
-        console.log('Received URL:', url);
-        startSpeechRecognition();
-    }
+    // if (request.action === 'startSpeechRecognition') {
+    //     const url = request.url; // get the url from the message
+    //     console.log('Received URL:', url);
+    //     startSpeechRecognition();
+    // }
     if (request.action === 'goToSection') {
         goToSectionBoolean = true;
+    }
+    if (request.action === 'callReadtextFile') {
+        const { filename } = request;
+        readtextFile(filename);
+        // startSpeechRecognition();
     }
 });
 
 startSpeechRecognition(); //start when the window is opened
 
-console.log(extractSection('go to the basics')); // Output: "The Basics"
-console.log(extractSection('Go To Exponents')); // Output: "Exponents"
-console.log(extractSection('Go to Linear Equations')); // Output: "Linear Equations"
-console.log(isValidSection('The Basics')); // Output: true
-console.log(isValidSection('Algebra')); // Output: false
+function readtextFile(filename) {
+    console.log('DOMContentLoaded event fired.');
 
+    const fileContentArray = []; // Create a new array to store the file content
+    chrome.runtime.getPackageDirectoryEntry(function (rootDir) {
+        console.log('Got package directory entry.');
 
+        rootDir.getFile(filename, {}, function (fileEntry) {
+            console.log('Got file entry.');
+
+            fileEntry.file(function (file) {
+                console.log('Got file.');
+
+                const reader = new FileReader();
+
+                reader.onloadend = function (e) {
+                    console.log('File loaded successfully.');
+
+                    const content = e.target.result;
+                    const lines = content.split('\n'); // Split the content into an array of lines
+                    fileContentArray.push(...lines); // Add the lines to the fileContentArray
+
+                    console.log('File content array:', fileContentArray);
+
+                    // Now you can use the 'fileContentArray' variable containing the lines of the text file
+                    // Perform any additional actions you need with the file content array
+                    readTextArray(fileContentArray); // Call the function to read the file content array using TTS
+                };
+
+                reader.readAsText(file);
+            });
+        });
+    });
+}
+
+function readTextArray(array) {
+    // Loop through the array and read each line using TTS
+    array.forEach(line => {
+        textToSpeech(line, () => {
+            // Callback function after each line is read
+            console.log('Line read:', line);
+        });
+    });
+}
+
+// function textToSpeech(text, callback) {
+//     if (recognition && isRecognizing) {
+//         recognition.stop();
+//         isRecognizing = false;
+//     }
+    
+//     const utterance = new SpeechSynthesisUtterance(text);
+//     utterance.onend = function() {
+//         if (callback && typeof callback === 'function') {
+//             callback();
+//         }
+//         if (recognition) {
+//             recognition.start();
+//             isRecognizing = true;
+//         }
+//     };
+//     window.speechSynthesis.speak(utterance);
+// }
+
+// document.addEventListener('DOMContentLoaded', function() {
+//     readtextFile();
+// });
