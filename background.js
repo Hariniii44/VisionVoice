@@ -8,7 +8,7 @@ function openExtensionWindow() {
     chrome.windows.create({
         url: 'index.html',
         type: 'popup',
-        width: 400, // Adjust width and height as needed
+        width: 400, 
         height: 800
     }, function (window) {
         chrome.tabs.onUpdated.addListener(function onTabUpdated(tabId, changeInfo, updatedTab) {
@@ -26,7 +26,7 @@ chrome.runtime.onInstalled.addListener(function() {
     openExtensionWindow();
 });
 
-// Additional listener to open extension window if it's not open on startup
+//open extension window if it's not open on startup
 chrome.runtime.onStartup.addListener(function() {
     chrome.windows.getAll({ populate: true }, function(windows) {
         let isExtensionWindowOpen = false;
@@ -60,6 +60,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         });
     }
 });
+
+
+
 
 
 
