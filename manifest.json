@@ -10,7 +10,7 @@
       "fileSystem"
     ],
     "web_accessible_resources": [
-      "webscraper/mathplanet_links.js"
+      "Text_com/mathplanet_links.txt"
     ],
     "background": {
       "persistent": true,
