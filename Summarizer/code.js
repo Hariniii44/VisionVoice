@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 const {
     GoogleGenerativeAI,
     HarmCategory,
@@ -83,7 +85,9 @@ const {
       let filePath2 = "../Text_com/summarized_content.txt";
       //the file name of the output text file
 
-      module.exports = textToWrite;
+      let summarized_content = textToWrite
+
+      module.exports = summarized_content;
       //exports the texttoWrite string to be used in other files
 
       fs.writeFile(filePath2, textToWrite, 'utf-8', (e) => {
