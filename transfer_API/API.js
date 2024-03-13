@@ -16,9 +16,10 @@ api.get('/user_command', (req, res) => {
 
 // Route to update the user command
 api.post('/user_command', (req, res) => {
+  console.log(req.body)
   let command = req.body.command;
   user_command = command;
-  res.status(201).json({ message: 'User command updated successfully' });
+  res.status(201).json({ message: 'User command updated successfully'});
 });
 
 // Start the server

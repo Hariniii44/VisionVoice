@@ -1,6 +1,6 @@
-const { startServer } = require('./API.js');
+// const { startServer } = require('./API.js');
 
-startServer();
+// startServer();
 
 const axios = require('axios');
 
