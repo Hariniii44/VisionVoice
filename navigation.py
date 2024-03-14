@@ -1,14 +1,16 @@
-import spacy
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
+import spacy
 
 
 class WebNavigator:
-    def __init__(self):
+    def __init__(self, commands=None):
         self.driver = webdriver.Chrome()
         self.current_url = None
+        self.commands = commands
+        self.nlp_navigation = spacy.load("fine_tuned_model")
 
     def open_hyperlink(self, absolute_url):
         try:
@@ -28,52 +30,38 @@ class WebNavigator:
             print("An error occurred while navigating back:", e)
             return None
 
-    def navigate(self):
-        current_url = input("Enter the URL: ")
+    def navigate(self, start_url, command):
+        self.current_url = start_url
+        self.driver.get(start_url)
 
-        if not current_url:
-            print("No website URL found. Exiting.")
-            self.driver.quit()
-            return
+        response = self.driver.page_source
+        soup = BeautifulSoup(response, 'html.parser')
+        hyperlinks = soup.find_all('a')
 
-        self.current_url = current_url
-        self.driver.get(current_url)
+        print(command)
 
-        while True:
-            response = self.driver.page_source
-            soup = BeautifulSoup(response, 'html.parser')
-            hyperlinks = soup.find_all('a')
+        doc_navigation = nlp_navigation(command)
 
-            user_input = input("Enter your command: ")  # Change this to receive user input
-            doc_navigation = nlp_navigation(user_input)
+        hyperlink_entities = [ent.text.lower() for ent in doc_navigation.ents if ent.label_ == "HYPERLINK"]
+        hyperlink_found = False
 
-            hyperlink_entities = [ent.text.lower() for ent in doc_navigation.ents if ent.label_ == "HYPERLINK"]
+        if hyperlink_entities:
+            for hyperlink_entity in hyperlink_entities:
+                for hyperlink in hyperlinks:
+                    if hyperlink_entity.lower() in hyperlink.text.lower():  # Case-insensitive comparison
+                        absolute_url = urljoin(self.current_url, hyperlink.get('href'))
+                        print(f"Opening the hyperlink: {absolute_url}")
+                        self.current_url = self.open_hyperlink(absolute_url)
+                        if self.current_url:
+                            hyperlink_found = True
+                            break
 
-            hyperlink_found = False
-            if hyperlink_entities:
-                for hyperlink_entity in hyperlink_entities:
-                    for hyperlink in hyperlinks:
-                        if hyperlink_entity.lower() in hyperlink.text.lower():  # Case-insensitive comparison
-                            absolute_url = urljoin(self.current_url, hyperlink.get('href'))
-                            print(f"Opening the hyperlink: {absolute_url}")
-                            self.current_url = self.open_hyperlink(absolute_url)
-                            if self.current_url:
-                                hyperlink_found = True
-                                break
-
-            if not hyperlink_found:
-                if user_input.lower() == "go back":
-                    self.current_url = self.go_back()
-                else:
-                    print("The specified hyperlink is not available on the website.")
-
-            if not self.current_url:
-                break
+        if not hyperlink_found:
+            if command.lower() == "go back":
+                self.current_url = self.go_back()
+            else:
+                print("The specified hyperlink is not available on the website.")
 
 
-# Load the fine-tuned NER model for navigating through the website
 nlp_navigation = spacy.load("fine_tuned_model")
 
-# Create an instance of WebNavigator and navigate
-navigator = WebNavigator()
-navigator.navigate()
