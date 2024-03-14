@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             chrome.runtime.sendMessage({ action: 'callReadtextFile', filename: 'Text_com/mathplanet_links.txt' });
         } else if (updatedUrl.includes('tutorial.math.lamar.edu')) {
             console.log('Pauls online notes website was opened');
-            chrome.runtime.sendMessage({ action: 'callReadtextFile', filename: 'Text_com/mathplanet_links.txt' });
+            chrome.runtime.sendMessage({ action: 'callReadtextFile', filename: 'Text_com/paul_links.txt' });
             // const script = document.createElement('script');
             // script.src = 'webscraper/paul_links.js';
             // document.head.appendChild(script);
@@ -22,7 +22,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             chrome.runtime.sendMessage({ action: 'callReadtextFile', filename: 'Text_com/mathplanet_links.txt' });
         } else if (updatedUrl.includes('mathsisfun.com')) {
             console.log('mathsisfun website was opened');
-            chrome.runtime.sendMessage({ action: 'callReadtextFile', filename: 'Text_com/mathplanet_links.txt' });
+            chrome.runtime.sendMessage({ action: 'callReadtextFile', filename: 'Text_com/mathsisfun_sections.txt' });
             chrome.runtime.sendMessage({ action: 'goToSection' });
         } else {
             console.log('Unknown website was opened');
