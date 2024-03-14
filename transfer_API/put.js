@@ -4,7 +4,7 @@
 
 const axios = require('axios');
 
-let myVariable = "new command";
+let myVariable = "Warhammer 40k!!!";
 
 axios.post('http://localhost:3000/user_command', {
   command: myVariable

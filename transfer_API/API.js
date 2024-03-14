@@ -1,21 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const api = express();
+const app = express();
 const port = 3000;
 
 // Middleware to parse JSON bodies
-api.use(bodyParser.json());
+app.use(bodyParser.json());
 
-let user_command = "";
+let user_command = "some random text";
 
 // Route to get the user command
-api.get('/user_command', (req, res) => {
+app.get('/user_command', (req, res) => {
   res.json(user_command);
 });
 
 // Route to update the user command
-api.post('/user_command', (req, res) => {
+app.post('/user_command', (req, res) => {
   console.log(req.body)
   let command = req.body.command;
   user_command = command;
@@ -23,13 +23,13 @@ api.post('/user_command', (req, res) => {
 });
 
 // Start the server
-api.listen(port, () => {
+app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
 
 module.exports = {
   startServer: function() {
-    api.listen(port, () => {
+    app.listen(port, () => {
       console.log(`Server is listening on port ${port}`);
     });
   }
