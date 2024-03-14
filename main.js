@@ -82,7 +82,7 @@ function handleResponse(text) {
     else if (text.includes('online notes') || text.includes('pauls online notes') || text.includes('paulsonlinenotes')) {
         replyP = createReply('opening pauls online notes website');
         texts.appendChild(replyP);
-        textToSpeech('Welcome to pauls online notes, these are the sections you can go to in this website. Preliminaries in Algebra, Solving Equations and Inequalities, Graphing and Functions, Common Graphs, Polynomial Functions, Exponential and Logarithm Functions, Systems of Equations');
+        textToSpeech('Welcome to pauls online notes. These are the sections you can go to in this website');
         chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://tutorial.math.lamar.edu/Classes/Alg/Alg.aspx'});
     }    
     if (text.includes('the basics') || text.includes('exponents') || text.includes('simplifying') || text.includes('factoring') || text.includes('logarithms') || text.includes('polynomials') || text.includes('linear equations') || text.includes('quadratic equations') || text.includes('solving word questions') || text.includes('functions') || text.includes('sequences and series')) {
@@ -110,49 +110,39 @@ function handleResponse(text) {
     }
 }
 
-
-
 function goToSection(text) {
     const section = extractSection(text);
     console.log(section);
     if (isValidSection(section)) {
-        let content = '';
-        if (section === 'the basics') {
-            readtextFile('Text_com/mathsisfun_thebasics.txt');
-            content = 'This is the content for The Basics section.';
-        } else if (section === 'exponents') {
-            content = 'This is the content for Exponents section.';
-        } else if (section === 'simplifying') {
-            content = 'This is the content for Simplifying section.';
-        } else if (section === 'factoring') {
-            content = 'This is the content for Factoring section.';
-        } else if (section === 'logarithms') {
-            content = 'This is the content for Logarithms section.';
-        } else if (section === 'polynomials') {
-            content = 'This is the content for Polynomials section.';
-        } else if (section === 'linear equations') {
-            content = 'This is the content for Linear Equations section.';
-        } else if (section === 'quadratic equations') {
-            content = 'This is the content for Quadratic Equations section.';
-        } else if (section === 'solving word questions') {
-            content = 'This is the content for Solving Word Questions section.';
-        } else if (section === 'functions') {
-            content = 'This is the content for Functions section.';
-        } else if (section === 'sequences and series') {
-            content = 'This is the content for Sequences and Series section.';
+        const sectionFiles = {
+            'the basics': 'Text_com/mathsisfun_thebasics.txt',
+            'exponents': 'Text_com/mathsisfun_exponents.txt',
+            'simplifying': 'Text_com/mathsisfun_simplifying.txt',
+            'factoring': 'Text_com/mathsisfun_factoring.txt',
+            'logarithms': 'Text_com/mathsisfun_logarithms.txt',
+            'polynomials': 'Text_com/mathsisfun_polynomials.txt',
+            'linear equations': 'Text_com/mathsisfun_linearequations.txt',
+            'quadratic equations': 'Text_com/mathsisfun_quadraticequations.txt',
+            'solving word questions': 'Text_com/mathsisfun_solvingwordequations.txt',
+            'functions': 'Text_com/mathsisfun_functions.txt',
+            'sequences and series': 'Text_com/mathsisfun_sequencesandseries.txt'
+        };
+
+        if (section in sectionFiles) {
+            readtextFile(sectionFiles[section]);
+            const content = `This is the content for ${section} section.`;
+            textToSpeech(content, () => {
+                sectionCount++;
+                console.log(`Section "${section}" identified ${sectionCount} times.`);
+
+                if (sectionCount >= 1) {
+                    return; // Terminate the function
+                }
+            });
+        } else {
+            textToSpeech('Invalid section mentioned. Please try again.');
+            console.log('Invalid section mentioned:', section);
         }
-
-        textToSpeech(content , () => {
-            sectionCount++;
-            console.log(`Section "${section}" identified ${sectionCount} times.`);
-
-            if (sectionCount >= 1) {
-                return; // Terminate the function
-            }            
-        });
-    } else {
-        textToSpeech('Invalid section mentioned. Please try again.');
-        console.log('Invalid section mentioned:', section);
     }
 }
 
@@ -245,11 +235,6 @@ function textToSpeech(text, callback) {
 // }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    // if (request.action === 'startSpeechRecognition') {
-    //     const url = request.url; // get the url from the message
-    //     console.log('Received URL:', url);
-    //     startSpeechRecognition();
-    // }
     if (request.action === 'goToSection') {
         goToSectionBoolean = true;
     }
@@ -259,8 +244,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         // startSpeechRecognition();
     }
 });
-
-startSpeechRecognition(); //start when the window is opened
 
 function readtextFile(filename) {
     console.log('DOMContentLoaded event fired.');
@@ -285,9 +268,6 @@ function readtextFile(filename) {
                     fileContentArray.push(...lines); // Add the lines to the fileContentArray
 
                     console.log('File content array:', fileContentArray);
-
-                    // Now you can use the 'fileContentArray' variable containing the lines of the text file
-                    // Perform any additional actions you need with the file content array
                     readTextArray(fileContentArray); // Call the function to read the file content array using TTS
                 };
 
@@ -298,14 +278,15 @@ function readtextFile(filename) {
 }
 
 function readTextArray(array) {
-    // Loop through the array and read each line using TTS
     array.forEach(line => {
         textToSpeech(line, () => {
-            // Callback function after each line is read
             console.log('Line read:', line);
         });
     });
 }
+
+startSpeechRecognition(); //start when the window is opened
+
 
 // function textToSpeech(text, callback) {
 //     if (recognition && isRecognizing) {
