@@ -32,7 +32,7 @@ class WebNavigator:
 
     def navigate(self, start_url, command):
         self.current_url = start_url
-        self.driver.get(start_url)
+       # self.driver.get(start_url)
 
         response = self.driver.page_source
         soup = BeautifulSoup(response, 'html.parser')
@@ -57,11 +57,11 @@ class WebNavigator:
                             break
 
         if not hyperlink_found:
-            if command.lower() == "go back":
-                self.current_url = self.go_back()
-            else:
                 print("The specified hyperlink is not available on the website.")
 
 
+
+
 nlp_navigation = spacy.load("fine_tuned_model")
+
 

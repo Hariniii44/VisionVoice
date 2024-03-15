@@ -2,7 +2,7 @@ import spacy
 from spacy.training.example import Example
 from function import *
 from navigation import WebNavigator
-from function import goto_section_function
+from selenium.common.exceptions import WebDriverException
 
 
 def train_text_categorization_model(train_data, use_case_labels, n_iter=20, dropout=0.5, batch_size=8):
@@ -222,11 +222,16 @@ def predict_intent_loop(model, use_case_labels, intent_functions):
 
     if navigator is None:  # If navigator object is not created yet, create it
         navigator = WebNavigator()
-        if current_url:
+        '''if current_url:
+            navigator.driver.get(current_url)  # Open the initial URL in the browser'''
+        try:
             navigator.driver.get(current_url)  # Open the initial URL in the browser
+        except WebDriverException as e:
+            print("Error: Unable to open the initial URL. Please check your internet connection or the URL provided.")
+            return
 
     while True:
-        test_command = input("Enter your command: ")
+        test_command = input("Enter your command: ").lower()
         predicted_intent = predict_intent(model, test_command, use_case_labels)
         if test_command.lower() == "close browser":
             print("Closing the browser...")
@@ -236,6 +241,10 @@ def predict_intent_loop(model, use_case_labels, intent_functions):
 
         if predicted_intent == "goto_section":  # Check if the predicted intent is 'goto_section'
             current_url = goto_section_function(test_command, navigator,current_url)  # Update current_url after navigation
+        elif predicted_intent == "goto_homepage":  # Check if the predicted intent is 'goto_homepage'
+            goto_homepage_function(current_url,navigator)
+        elif predicted_intent == "go_back":  # Check if the predicted intent is 'goto_homepage'
+            go_back_function(navigator,current_url)
         elif predicted_intent in intent_functions:
             intent_functions[predicted_intent]()  # Call the corresponding function
         else:
