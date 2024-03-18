@@ -2,25 +2,32 @@
     "name": "Vision Voice",
     "version": "1.0.0",
     "description": "First Version For Vision Voice",
-    "manifest_version": 2,
+    "manifest_version": 3,
     "permissions": [
       "storage",
       "activeTab",
-      "tts",
-      "fileSystem"
+      "tts"
     ],
-    "web_accessible_resources": [
-      "Text_com/mathplanet_links.txt"
+    "host_permissions": [
+      "http://localhost:3000/*"
     ],
     "background": {
-      "persistent": true,
-      "scripts": ["background.js"]
+      "service_worker": "dist/background.bundle.js",
+      "type": "module"
     },
     "content_scripts": [
       {
         "matches": ["<all_urls>"],
-        "js": ["content.js"]
+        "js": ["src/content.js"]
       }
-    ]
+    ],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' http://localhost:3000; object-src 'self'",
+      "sandbox": "sandbox allow-scripts allow-forms"
+    },
+    "action": {
+      "default_popup": "index.html"
+    }
   }
+ 
   
