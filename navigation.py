@@ -2,6 +2,10 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+
 import spacy
 
 
@@ -32,7 +36,8 @@ class WebNavigator:
 
     def navigate(self, start_url, command):
         self.current_url = start_url
-       # self.driver.get(start_url)
+        #self.driver.get(start_url)
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
 
         response = self.driver.page_source
         soup = BeautifulSoup(response, 'html.parser')
@@ -56,12 +61,8 @@ class WebNavigator:
                             hyperlink_found = True
                             break
 
-        if not hyperlink_found:
-                print("The specified hyperlink is not available on the website.")
-
-
+    def get_current_url(self):
+        return str(self.current_url)
 
 
 nlp_navigation = spacy.load("fine_tuned_model")
-
-

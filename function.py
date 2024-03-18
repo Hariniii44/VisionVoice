@@ -40,10 +40,13 @@ def goto_homepage_function(current_url, navigator):
         print("Home page URL not found for the current website.")
 
 
-def read_hyperlinks_function():
-    URL = "https://www.mathsisfun.com/algebra/introduction.html"
-    write_to_file(URL)
+def read_hyperlinks_function(navigator):
     print("link")
+    current_url = navigator.get_current_url()  # Get the current URL from the navigator
+    if current_url:
+        print("Current URL:", current_url)
+    else:
+        print("Current URL not available.")
 
 
 def write_to_file(URL):
@@ -51,8 +54,13 @@ def write_to_file(URL):
         file.write(URL)
 
 
-def read_content_function():
-    print("reading")
+def read_content_function(navigator):
+    print("read")
+    current_url = navigator.get_current_url()  # Get the current URL from the navigator
+    if current_url:
+        print("Current URL:", current_url)
+    else:
+        print("Current URL not available.")
 
 
 def go_back_function(navigator, current_url):
@@ -68,7 +76,6 @@ def go_back_function(navigator, current_url):
     # Update current_url after navigation
     current_url = navigator.current_url
     return current_url
-
 
 
 def explain_images_function():
@@ -89,9 +96,7 @@ def translate_to_tamil_function():
 
 def goto_section_function(test_command, navigator, current_url):
     print("Go to section")
-    print(current_url)
-    start_url = current_url if current_url else input(
-        "Enter your url: ")  # Use current URL if available, otherwise ask the user for input
-    print(start_url)
+    start_url = current_url if current_url else print(
+        "The specified link is not available ")  # Use current URL if available, otherwise ask the user for input
     navigator.navigate(start_url, test_command)
     return start_url  # Return the updated current URL after navigation
