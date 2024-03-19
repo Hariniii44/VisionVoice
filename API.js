@@ -11,6 +11,10 @@ api.use(bodyParser.json());
 let user_command = "";
 let url = "";
 
+function sendURLToExtension(url) {
+  chrome.runtime.sendMessage( 'onlnadlphenfaabogkleohajhoidjkjg', { type: 'url_from_node', url: url });
+}
+
 // Route to get the url
 api.get('/url', (req, res) => {
   res.json(url);
@@ -26,12 +30,19 @@ api.post('/url', (req, res) => {
   exec('python visionnlp/commands.py', (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error}`);
-      res.status(500).json({ error: 'Error executing Python script' });
+      // res.status(500).json({ error: 'Error executing Python script' });
       return;
     }
     console.log(`stdout: ${stdout}`);
     console.error(`stderr: ${stderr}`);
-    res.status(201).json({ message: 'URL updated successfully'}); 
+
+    const currentURL = stdout.trim();
+    console.log(`URL: ${currentURL}`);
+    
+    if (currentURL) {
+      sendURLToExtension(currentURL);
+    }
+    // res.status(201).json({ message: 'URL updated successfully'}); 
   });
 });
 
