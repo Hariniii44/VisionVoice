@@ -1,29 +1,7 @@
-// import axios from 'axios';
-speechSynthesis.onvoiceschanged = function() {
-    // Now you can use the voices
-};
-// Add an event listener to the slider to detect changes in its value
-document.getElementById('myrange').addEventListener('input', function() {
-    const sliderValue = parseFloat(this.value); // Get the current value of the slider
-    console.log('Slider value:', sliderValue); // Log the slider value to the console
-    document.getElementById('slider-value').textContent = sliderValue; // Update the displayed value
-    updateSpeechRate(sliderValue); // Call a function to update the speech rate
-});
-
-
-// Function to update the speech rate
-function updateSpeechRate(rate) {
-    // Create a new SpeechSynthesisUtterance object
-    const utterance = new SpeechSynthesisUtterance();
-    utterance.rate = rate; // Set the speech rate to the specified value
-    window.speechSynthesis.cancel(); // Cancel any ongoing speech synthesis
-    window.speechSynthesis.speak(utterance); // Speak with the updated rate
-}
-
 const slider = document.getElementById("myrange");
 const output = document.getElementById("slider-value");
 const texts = document.querySelector('.texts');
-// const recognition  = new webkitSpeechRecognition();
+
 let recognition;
 let isRecognizing = false;
 let shouldReadContent = false;
@@ -38,6 +16,26 @@ goToSectionPaulBoolean = false;
         output.innerHTML = this.value;
     }
 
+speechSynthesis.onvoiceschanged = function() {
+    //different voice option
+};
+
+//event listener to the slider to detect changes in its value
+document.getElementById('myrange').addEventListener('input', function() {
+    const sliderValue = parseFloat(this.value); // Get the current value of the slider
+    console.log('Slider value:', sliderValue); // Log the slider value to the console
+    document.getElementById('slider-value').textContent = sliderValue; // Update the displayed value
+    updateSpeechRate(sliderValue); // Call a function to update the speech rate
+});
+
+// Function to update the speech rate
+function updateSpeechRate(rate) {
+    // Create a new SpeechSynthesisUtterance object
+    const utterance = new SpeechSynthesisUtterance();
+    utterance.rate = rate; // Set the speech rate to the specified value
+    window.speechSynthesis.cancel(); // Cancel any ongoing speech synthesis
+    window.speechSynthesis.speak(utterance); // Speak with the updated rate
+}
 
 function startSpeechRecognition() {
     texts.innerHTML = '';    //clear previous
@@ -74,12 +72,13 @@ function startSpeechRecognition() {
         isRecognizing = true;
         recognition.start();
     }
-}function getSelectedVoice() {
+}
+
+function getSelectedVoice() {
     const selectedVoiceOption = document.getElementById('voice-combobox').value;
     const voices = speechSynthesis.getVoices();
     return voices.find(voice => voice.name === selectedVoiceOption);
 }
-
 
 function handleResponse(text) {
     let replyP;
@@ -87,43 +86,50 @@ function handleResponse(text) {
     if (text.includes('hello')) {
         replyP = createReply('Hi');
         texts.appendChild(replyP);
-        const selectedVoice = getSelectedVoice(); // Assuming you have a function to get the selected voice
-        textToSpeech('Welcome to vision voice. which website would you like to go to? ',selectedVoice);
-        // You can either go to maths is fun, oxnotes, mathplanet or pauls online notes
+        const selectedVoice = getSelectedVoice();
+        textToSpeech('Welcome to vision voice. which website would you like to go to? ', selectedVoice);   //You can either go to maths is fun, oxnotes, mathplanet or pauls online notes
     }
-    // Add more conditions for other responses...
-
     else if (text.includes('maths is fun')) {
         replyP = createReply('opening mathsisfun');
         texts.appendChild(replyP);
         const selectedVoice = getSelectedVoice();
-        textToSpeech('Welcome to maths is fun. These are the sections you can go to in this website',selectedVoice);  
+        textToSpeech('Welcome to maths is fun. These are the sections you can go to in this website.', selectedVoice);  
+        readtextFile('Text_com/mathsisfun_sections.txt');
+        goToSectionBoolean = true;
         url = 'https://www.mathsisfun.com/algebra/index.html';
         chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://www.mathsisfun.com/algebra/index.html'});
+        // chrome.runtime.sendMessage({ action: 'readHeadings', url: url });
     }
     else if (text.includes('aux notes') || text.includes('Ox notes') || text.includes('ox notes')) {
         replyP = createReply('opening oxnotes');
         texts.appendChild(replyP);
         const selectedVoice = getSelectedVoice();
-        textToSpeech('Welcome to oxnotes, these are the sections you can go to in this website.',selectedVoice);
+        textToSpeech('Welcome to oxnotes, these are the sections you can go to in this website.', selectedVoice);
+        readtextFile('Text_com/oxnotes_links.txt');
         url = 'https://www.oxnotes.com/igcse-mathematics.html';
         chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://www.oxnotes.com/igcse-mathematics.html'});
+        // chrome.runtime.sendMessage({ action: 'readHeadings', url: url });
     }
     else if (text.includes('mathplanet') || text.includes('math planet') || text.includes('maths planet')) {
         replyP = createReply('opening mathplanet website');
         texts.appendChild(replyP);
         const selectedVoice = getSelectedVoice();
-        textToSpeech('Welcome to mathplanet website, these are the sections you can go to in this website.',selectedVoice ) 
+        textToSpeech('Welcome to mathplanet website, these are the sections you can go to in this website.', selectedVoice); 
+        readtextFile('Text_com/mathplanet_links.txt');
         url = 'https://www.mathplanet.com/education/algebra-2';
         chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://www.mathplanet.com/education/algebra-2'});
+        // chrome.runtime.sendMessage({ action: 'readHeadings', url: url });
     }
     else if (text.includes('online notes') || text.includes('pauls online notes') || text.includes('paulsonlinenotes')) {
         replyP = createReply('opening pauls online notes website');
         texts.appendChild(replyP);
         const selectedVoice = getSelectedVoice();
-        textToSpeech('Welcome to pauls online notes. These are the sections you can go to in this website',selectedVoice);
+        textToSpeech('Welcome to pauls online notes. These are the sections you can go to in this website', selectedVoice);
+        readtextFile('Text_com/paul_links.txt');
+        goToSectionPaulBoolean = true;
         url = 'https://tutorial.math.lamar.edu/Classes/Alg/Alg.aspx';
         chrome.runtime.sendMessage({ action: 'openNewTab', url: 'https://tutorial.math.lamar.edu/Classes/Alg/Alg.aspx'});
+        // chrome.runtime.sendMessage({ action: 'readHeadings', url: url });
     }    
     else if (text.includes('the basics') || text.includes('exponents') || text.includes('simplifying') || text.includes('factoring') || text.includes('logarithms') || text.includes('polynomials') || text.includes('linear equations') || text.includes('quadratic equations') || text.includes('solving word questions') || text.includes('functions') || text.includes('sequences and series')) {
         if (goToSectionBoolean) {
@@ -265,7 +271,8 @@ function stopRecognition() {
         console.log('Recognition is not in progress');
     }
 }
-function textToSpeech(text, selectedVoice, callback) {
+
+function textToSpeech(text, callback) {
     stopRecognition(); // Stop recognition if it's in progress
 
     const utterance = new SpeechSynthesisUtterance(text);
@@ -273,51 +280,19 @@ function textToSpeech(text, selectedVoice, callback) {
     utterance.rate = parseFloat(document.getElementById('slider-value').textContent); // Set the speech rate from the slider value
     utterance.onstart = function() {
         stopRecognition(); // Stop recognition if it starts during speech synthesis
+        recognition.abort();
     };
     utterance.onend = function() {
         if (callback && typeof callback === 'function') {
             callback();
         }
-        // setTimeout(startRecognition, 3000);
+        setTimeout(startRecognition, 3000);
 
-        startRecognition(); // Start recognition after speech synthesis ends
+        // startRecognition(); // Start recognition after speech synthesis ends
     };
 
     window.speechSynthesis.speak(utterance);
 }
-
-
-
-
-
-
-// function textToSpeech(text, callback) {
-//     if (recognition && isRecognizing) {
-//         recognition.stop();
-//         isRecognizing = false;
-//     }
-    
-//     const utterance = new SpeechSynthesisUtterance(text);
-//     utterance.onstart = function() {
-//         if (recognition && recognition.readyState === 'listening') {
-//             recognition.stop();
-//             isRecognizing = false;
-//         }
-//     };
-//     utterance.onend = function() {
-//         if (callback && typeof callback === 'function') {
-//             callback();
-//         }
-//         if (recognition && recognition.readyState !== 'listening') {
-//             recognition.start();
-//             isRecognizing = true;
-//         }
-//         else {
-//             console.log('Recognition is already listening');
-//         }
-//     };
-//     window.speechSynthesis.speak(utterance);
-// }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.action === 'goToSection') {
@@ -329,6 +304,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.action === 'callReadtextFile') {
         const { filename } = request;
         readtextFile(filename);
+    }
+});
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.action === 'contentUpdated') {
+        // Access the content from the request object
+        const content = request.content;
+        // Process the content as needed
+        textToSpeech(content, () => {
+            console.log('Content read:', content);
+        });
     }
 });
 
@@ -375,25 +361,3 @@ function readTextArray(array) {
 startSpeechRecognition(); //start when the window is opened
 
 
-// function textToSpeech(text, callback) {
-//     if (recognition && isRecognizing) {
-//         recognition.stop();
-//         isRecognizing = false;
-//     }
-    
-//     const utterance = new SpeechSynthesisUtterance(text);
-//     utterance.onend = function() {
-//         if (callback && typeof callback === 'function') {
-//             callback();
-//         }
-//         if (recognition) {
-//             recognition.start();
-//             isRecognizing = true;
-//         }
-//     };
-//     window.speechSynthesis.speak(utterance);
-// }
-
-// document.addEventListener('DOMContentLoaded', function() {
-//     readtextFile();
-// });

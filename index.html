@@ -15,13 +15,13 @@
                 <p>Hello WOrld</p>
             </div>
         </div>
-       
+        
         <div class="switch-container">
             <h3 class="switch-heading">Master Switch</h3>
-            <button id="startRecognitionButton">Start Speech Recognition</button>
-            <!-- <input type="checkbox" id="master-switch" /><label for="master-switch">Toggle</label> -->
+            <!-- <button id="startRecognitionButton">Start Speech Recognition</button> -->
+            <input type="checkbox" id="master-switch" /><label for="master-switch">Toggle</label>
         </div>
-        <div id = "loadingIndicator" style = "display: none;">Loading...</div>
+        <!-- <div id = "loadingIndicator" style = "display: none;">Loading...</div> -->
         <div class="switch-container">
             <h3 class="switch-heading">Keyboard Navigation</h3>
             <input type="checkbox" id="keyboard-switch" /><label for="keyboard-switch">Toggle</label>
@@ -38,19 +38,23 @@
                 <option value="Google UK English Female">Female</option>
             </select>
         </div>
-        
-        
+        <!-- <div class="switch-two-container">
+            <h3 class="switch-heading">Language</h3>
+            <select name="language-combobox" id="language-combobox">
+                <option value="0">Sinhala</option>
+                <option value="1">Tamil</option>
+                <option value="2">English</option>
+            </select>
+        </div> -->
         <div class="slider-container">
             <h4 class="slider-heading">Voice Speed</h4>
             <p><span id="slider-value">1.0</span></p>
-            <input type="range" min="0.25" max="1.75" step="0.25" value="1.0" class="slider" id="myrange">
+            <input type="range" min="0.25" max="2" step="0.5" value="1" class="slider" id="myrange">
         </div>
     </div>
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
     <script src = "src/main.js"></script>
-
-
     
 </body>
 </html>
