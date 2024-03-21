@@ -4,10 +4,10 @@
 
 const axios = require('axios');
 
-let myVariable = "new command";
+let myVariable = "";
 
 axios.post('http://localhost:3000/user_command', {
-  command: myVariable
+  data: myVariable
 })
   .then(response => {
     console.log(response.data);
