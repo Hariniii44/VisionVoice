@@ -170,7 +170,9 @@ train_data = [
     {"text": "arithmetic sequences and series", "entities": [(0, 31, "HYPERLINK")]},
     {"text": "Go to geometric sequences and series", "entities": [(6, 36, "HYPERLINK")]},
     {"text": "geometric sequences and series", "entities": [(0, 30, "HYPERLINK")]},
-    {"text": "lines", "entities": [(0, 5, "HYPERLINK")]}
+    {"text": "lines", "entities": [(0, 5, "HYPERLINK")]},
+    {"text": "more on the augmented matrix", "entities": [(0, 28, "HYPERLINK")]},
+    {"text": "pemdas", "entities": [(0, 6, "HYPERLINK")]}
 
 
 ]

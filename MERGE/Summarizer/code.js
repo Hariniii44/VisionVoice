@@ -1,4 +1,4 @@
-const axios = require('axios');
+// const axios = require('axios');
 
 const {
     GoogleGenerativeAI,
@@ -64,7 +64,7 @@ const {
       console.log("Read from the input text file")
       //just to inform that the file has been read from
 
-      let text1 = "Explain the following text in a simple and concise manner, '" + paragraph + "'. Write it as a speech, like if a teacher was speaking it out";
+      let text1 = "Explain the following text in a simple and concise manner, '" + paragraph + "'. Write it in a short form without any point forms and '*'.";
       //text1 is the prompt that is sent to the API, it is a concatenation of paragraph
 
       const parts = [ //the array that contains the prompt
@@ -91,16 +91,16 @@ const {
       //exports the texttoWrite string to be used in other files
 
       //posts the content to the API
-      axios.post('http://localhost:3000/content', {
-        content: summarized_content
-      })
-      .then((res) => {
-        console.log(`Status: ${res.status}`);
-        console.log('Body: ', res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+      // axios.post('http://localhost:3000/content', {
+      //   content: summarized_content
+      // })
+      // .then((res) => {
+      //   console.log(`Status: ${res.status}`);
+      //   console.log('Body: ', res.data);
+      // })
+      // .catch((err) => {
+      //   console.error(err);
+      // });
 
 
 
@@ -117,4 +117,10 @@ const {
     
   }
   
-  run(); //the defined async function is called when this file is run
+
+try{
+    run(); //the defined async function is called when this file is run
+} catch (error) {
+    error_message = "An error occurred while generating content"
+    fs.writeFile(fileName, error_message)
+}

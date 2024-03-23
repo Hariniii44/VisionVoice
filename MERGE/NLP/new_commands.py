@@ -8,6 +8,8 @@ import requests
 import json
 import subprocess
 import pyttsx3
+from gtts import gTTS
+
 
 def train_text_categorization_model(train_data, use_case_labels, n_iter=20, dropout=0.5, batch_size=8):
     # Load the large English language model
@@ -102,6 +104,17 @@ train_data = [
     ("going to the ratios section", {"cats": {"goto_section": 1}}),
     ("open introduction to algebra", {"cats": {"goto_section": 1}}),
     ("open trigonometry", {"cats": {"goto_section": 1}}),
+    ("go to matrices", {"cats": {"goto_section": 1}}),
+    ("matrices", {"cats": {"goto_section": 1}}),
+    ("radicals", {"cats": {"goto_section": 1}}),
+    ("polynomials", {"cats": {"goto_section": 1}}),
+    ("quadratic equations, part i", {"cats": {"goto_section": 1}}),
+    ("go to quadratic equations, part ii", {"cats": {"goto_section": 1}}),
+    ("the definition of a function", {"cats": {"goto_section": 1}}),
+    ("lines, circles and piecewise functions", {"cats": {"goto_section": 1}}),
+    ("i want to learn ellipses", {"cats": {"goto_section": 1}}),
+    ("more on the augmented matrix", {"cats": {"goto_section": 1}}),
+    ("go to the Surds", {"cats": {"goto_section": 1}}),
 
     ("readout the Hyperlinks", {"cats": {"read_hyperlinks": 1}}),
     ("list the links", {"cats": {"read_hyperlinks": 1}}),
@@ -161,8 +174,12 @@ train_data = [
     ("offer insights into the visuals", {"cats": {"explain_images": 1}}),
     ("examine the imagery", {"cats": {"explain_images": 1}}),
     ("explain about the images", {"cats": {"explain_images": 1}}),
+    ("explain images", {"cats": {"explain_images": 1}}),
+    ("read images", {"cats": {"explain_images": 1}}),
+    ("images", {"cats": {"explain_images": 1}}),
+    
 
-    ("describe the graph", {"cats": {"explain_graph": 1}}),
+    ("describe the graphs", {"cats": {"explain_graph": 1}}),
     ("explain the data visualization", {"cats": {"explain_graph": 1}}),
     ("provide details about the chart", {"cats": {"explain_graph": 1}}),
     ("analyze the graphical representation", {"cats": {"explain_graph": 1}}),
@@ -173,30 +190,36 @@ train_data = [
     ("clarify what the graph depicts", {"cats": {"explain_graph": 1}}),
     ("break down the chart", {"cats": {"explain_graph": 1}}),
     ("explain the graphical data", {"cats": {"explain_graph": 1}}),
+    ("explain graphs", {"cats": {"explain_graph": 1}}),
+    ("read graphs", {"cats": {"explain_graph": 1}}),
 
-    ("please translate to Sinhala", {"cats": {"translate_to_sinhala": 1}}),
-    ("translate this into Sinhala please.", {"cats": {"translate_to_sinhala": 1}}),
-    ("can you convert this to Sinhala?", {"cats": {"translate_to_sinhala": 1}}),
-    ("i need this text in Sinhala please.", {"cats": {"translate_to_sinhala": 1}}),
-    ("could you provide a translation in Sinhala?", {"cats": {"translate_to_sinhala": 1}}),
-    ("please translate this into Sinhala.", {"cats": {"translate_to_sinhala": 1}}),
-    ("i'm looking for a translation into Sinhala, please.", {"cats": {"translate_to_sinhala": 1}}),
-    ("is it possible to get this text translated into Sinhala?", {"cats": {"translate_to_sinhala": 1}}),
-    ("kindly translate this into Sinhala, please.", {"cats": {"translate_to_sinhala": 1}}),
-    ("can you render this in Sinhala?", {"cats": {"translate_to_sinhala": 1}}),
-    ("i'd like this text converted into Sinhala, please.", {"cats": {"translate_to_sinhala": 1}}),
 
-    ("translate this into Tamil please.", {"cats": {"translate_to_tamil": 1}}),
-    ("can you convert this to Tamil?", {"cats": {"translate_to_tamil": 1}}),
-    ("i need this text in Tamil please.", {"cats": {"translate_to_tamil": 1}}),
-    ("could you provide a translation in Tamil?", {"cats": {"translate_to_tamil": 1}}),
-    ("please translate this into Tamil.", {"cats": {"translate_to_tamil": 1}}),
-    ("i'm looking for a translation into Tamil, please.", {"cats": {"translate_to_tamil": 1}}),
-    ("is it possible to get this text translated into Tamil?", {"cats": {"translate_to_tamil": 1}}),
-    ("kindly translate this into Tamil, please.", {"cats": {"translate_to_tamil": 1}}),
-    ("can you render this in Tamil?", {"cats": {"translate_to_tamil": 1}}),
-    ("i'd like this text converted into Tamil, please.", {"cats": {"translate_to_tamil": 1}}),
-    ("please translate to Tamil", {"cats": {"translate_to_tamil": 1}}),
+    ("please translate to sinhala", {"cats": {"translate_to_sinhala": 1}}),
+    ("translate this into sinhala please.", {"cats": {"translate_to_sinhala": 1}}),
+    ("can you convert this to sinhala?", {"cats": {"translate_to_sinhala": 1}}),
+    ("i need this text in sinhala please.", {"cats": {"translate_to_sinhala": 1}}),
+    ("could you provide a translation in sinhala?", {"cats": {"translate_to_sinhala": 1}}),
+    ("please translate this into sinhala.", {"cats": {"translate_to_sinhala": 1}}),
+    ("i'm looking for a translation into sinhala, please.", {"cats": {"translate_to_sinhala": 1}}),
+    ("is it possible to get this text translated into sinhala?", {"cats": {"translate_to_sinhala": 1}}),
+    ("kindly translate this into sinhala, please.", {"cats": {"translate_to_sinhala": 1}}),
+    ("can you render this in sinhala?", {"cats": {"translate_to_sinhala": 1}}),
+    ("i'd like this text converted into sinhala, please.", {"cats": {"translate_to_sinhala": 1}}),
+    ("translate the content to sinhala", {"cats": {"translate_to_sinhala": 1}}),
+
+    ("translate this into tamil please.", {"cats": {"translate_to_tamil": 1}}),
+    ("can you convert this to tamil?", {"cats": {"translate_to_tamil": 1}}),
+    ("i need this text in tamil please.", {"cats": {"translate_to_tamil": 1}}),
+    ("could you provide a translation in tamil?", {"cats": {"translate_to_tamil": 1}}),
+    ("please translate this into tamil.", {"cats": {"translate_to_tamil": 1}}),
+    ("i'm looking for a translation into tamil, please.", {"cats": {"translate_to_tamil": 1}}),
+    ("is it possible to get this text translated into tamil?", {"cats": {"translate_to_tamil": 1}}),
+    ("kindly translate this into tamil, please.", {"cats": {"translate_to_tamil": 1}}),
+    ("can you render this in tamil?", {"cats": {"translate_to_tamil": 1}}),
+    ("i'd like this text converted into tamil, please.", {"cats": {"translate_to_tamil": 1}}),
+    ("please translate to tamil", {"cats": {"translate_to_tamil": 1}}),
+    ("translate the content to tamil", {"cats": {"translate_to_tamil": 1}}),
+
 
     ("Shut down the browser.", {"cats": {"close_browser": 1}}),
     ("Exit the browser.", {"cats": {"close_browser": 1}}),
@@ -225,30 +248,72 @@ response = requests.get(path)
 print(response.json())
 current_url = response.json()
 print(current_url)
-
-if "oxnotes" in current_url:
-    current_url = "https://www.oxnotes.com/igcse-mathematics.html"
-elif "mathsisfun" in current_url:
-    current_url = "https://www.mathsisfun.com/algebra/index.html"
-elif "mathplanet" in current_url:
-    current_url = "https://www.mathplanet.com/education/algebra-2"
-elif "tutorial" in current_url:
-    current_url = "https://tutorial.math.lamar.edu/Classes/Alg/Alg.aspx"
-
-
-
-#url = input("Enter the initial URL: ")
-navigator = None  # Initialize navigator variable
-
-def read_out_text(text):
-    engine = pyttsx3.init()
-    engine.say(text)
-    engine.runAndWait()
+intro = ""
+links_to_read = ""
 
 def read_file(filename):
     with open(filename, 'r') as file:
         content = file.read()
         return content
+
+
+
+if "oxnotes" in current_url:
+    current_url = "https://www.oxnotes.com/igcse-mathematics.html"
+    links_to_read = read_file("../Text_com/oxnotes_links.txt")
+    intro = "Welcome to oxnotes. These are the sections you can go to in this website."
+elif "mathsisfun" in current_url:
+    current_url = "https://www.mathsisfun.com/algebra/index.html"
+    links_to_read = read_file("../Text_com/mathsisfun_sections.txt")
+    intro = "Welcome to maths is fun. These are the sections you can go to in this website."
+elif "mathplanet" in current_url:
+    current_url = "https://www.mathplanet.com/education/algebra-2"
+    links_to_read = read_file("../Text_com/mathplanet_links.txt")
+    intro = "Welcome to mathplanet. These are the sections you can go to in this website."
+elif "tutorial" in current_url:
+    current_url = "https://tutorial.math.lamar.edu/Classes/Alg/Alg.aspx"
+    links_to_read = read_file("../Text_com/paul_links.txt")
+    intro = "Welcome to pauls online notes. These are the sections you can go to in this website."
+
+
+#url = input("Enter the initial URL: ")
+navigator = None  # Initialize navigator variable
+
+def read_out_text(text):#function to read out text
+    engine = pyttsx3.init() #the speech synthesis started
+    engine.say(text) #adds text to the speech queue
+    engine.runAndWait() #reads out the text
+
+def read_file(filename):
+    with open(filename, 'r') as file:
+        content = file.read()
+        return content
+    
+def read_sinhala():
+    try:
+        content_path = "../Text_com/output_sinhala.txt"
+        content_text = read_file(content_path)
+        engine = pyttsx3.init()
+        engine.setProperty('voice', 'si')
+
+        engine.say(content_text)
+        engine.runAndWait()
+    except Exception as e:
+        print(str(e))
+        read_out_text("There was an issue reading out the translated Sinhala text, sorry. But you can have someone read the text to you in the output_sinhala file in the text_com folder if you want")
+
+def read_tamil():
+    try:
+        content_path = "../Text_com/output_tamil.txt"
+        content_text = read_file(content_path)
+        engine = pyttsx3.init()
+        engine.setProperty('voice', 'tamil')
+
+        engine.say(content_text)
+        engine.runAndWait()
+    except Exception as e:
+        print(str(e))
+        read_out_text("There was an issue reading out the translated Tamil text, sorry. But you can have someone read the text to you in the output_tamil file in the text_com folder if you want") 
 
 
 def predict_intent_loop(model, use_case_labels, intent_functions):
@@ -261,6 +326,8 @@ def predict_intent_loop(model, use_case_labels, intent_functions):
             navigator.driver.get(url)  # Open the initial URL in the browser'''
         try:
             navigator.driver.get(current_url)  # Open the initial URL in the browser
+            read_out_text(intro)
+            read_out_text(links_to_read)
         except WebDriverException as e:
             print("Error: Unable to open the initial URL. Please check your internet connection or the URL provided.")
             return
@@ -306,6 +373,7 @@ def predict_intent_loop(model, use_case_labels, intent_functions):
         predicted_intent = predict_intent(model, test_command, use_case_labels)
         if test_command.lower() == "close browser":
             print("Closing the browser...")
+            read_out_text("Closing the browser")
             if navigator is not None:
                 quit_browser(navigator)  # Call quit_browser function with the navigator object
             break
@@ -315,6 +383,7 @@ def predict_intent_loop(model, use_case_labels, intent_functions):
         elif predicted_intent == "go_back":  # Check if the predicted intent is 'goto_homepage'
             go_back_function(navigator,current_url)
         elif predicted_intent == "read_hyperlinks":
+            read_out_text("Getting links, please wait a bit")
 
             current_url = read_hyperlinks_function(navigator)
             path = "http://localhost:3000/url"
@@ -329,8 +398,20 @@ def predict_intent_loop(model, use_case_labels, intent_functions):
                 print("Node.js file executed successfully")
             except subprocess.CalledProcessError as e:
                 print("Error occurred while executing Node.js file:", e)
+
+
+            #reading out the content from the text file
+            content_path = "../Text_com/mathplanet_subsections.txt"
+            content_text = read_file(content_path)
+            if content_text:
+                read_out_text("The sublinks are as follows")
+                read_out_text(content_text)
+            else:
+                read_out_text("There are no sublinks on this page, sorry about that. Maybe navigate to a page that has sublinks?")
             
         elif predicted_intent == "read_content":
+
+            read_out_text("Generating content, please wait a bit")
             current_url = read_content_function(navigator)
 
             path = "http://localhost:3000/url"
@@ -379,9 +460,10 @@ def predict_intent_loop(model, use_case_labels, intent_functions):
             except subprocess.CalledProcessError as e:
                 print("An error occured while summarizing", e)
                 
-                content_path = "../Text_com/summarized_content.txt"
-                content_text = read_file(content_path)
-                read_out_text(content_text)
+            #reading out the content from the text file
+            content_path = "../Text_com/summarized_content.txt"
+            content_text = read_file(content_path)
+            read_out_text(content_text)
 
 
             # #speaks out the content
@@ -396,6 +478,7 @@ def predict_intent_loop(model, use_case_labels, intent_functions):
         
         elif predicted_intent == "explain_images":
             explain_images_function()
+            read_out_text("Generating content, please wait a bit")
             vertexAI_path = "../../Webscraper/Vertex/VertexAI_2.py"
             subprocess.call(["python", vertexAI_path])
 
@@ -407,23 +490,40 @@ def predict_intent_loop(model, use_case_labels, intent_functions):
             except subprocess.CalledProcessError as e:
                 print("An error occured while summarizing", e)
 
-        elif predicted_intent in intent_functions:
-            intent_functions[predicted_intent]()  # Call the corresponding function
-        
+            #reading out the content from the text file
+            content_path = "../Text_com/summarized_content.txt"
+            content_text = read_file(content_path)
+            read_out_text(content_text)
+
         elif predicted_intent == "translate_to_sinhala":
+            translate_to_sinhala_function()
+            print("translating to sinhala")
             # Path to the Python script you want to execute
             sinhala_path = "../Translate/sinhala_translate.py"
             # Execute the script
             subprocess.call(["python", sinhala_path])
 
+            #reading out the content from the text file
+            read_sinhala()
+
         elif predicted_intent == "translate_to_tamil":
+            translate_to_tamil_function()
+            print("translating to tamil")
             # Path to the Python script you want to execute
             tamil_path = "../Translate/tamil_translate.py"
             # Execute the script
             subprocess.call(["python", tamil_path])
+
+            #reading out the content from the text file
+            read_tamil()
+
+        
+        elif predicted_intent in intent_functions:
+            intent_functions[predicted_intent]()  # Call the corresponding function
         
         else:
             print("Command not recognized.")
+            read_out_text("Command not recognized")
 
 
 intent_functions = {
@@ -432,7 +532,6 @@ intent_functions = {
     "read_content": read_content_function,
     "go_back": go_back_function,
     "explain_images": explain_images_function,
-    "explain_graph": explain_graph_function,
     "translate_to_sinhala": translate_to_sinhala_function,
     "translate_to_tamil": translate_to_tamil_function,
 }

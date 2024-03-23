@@ -1,52 +1,40 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const { exec } = require('child_process');
 // const { exec } = require('child_process');
 
 const api = express();
 const port = 3000;
 
-const WebSocket = require('ws');
+// const WebSocket = require('ws');
 
-const webSocket = new WebSocket.Server({ port: 8080 });
+// const webSocket = new WebSocket.Server({ port: 8080 });
 //creates a websocket
 
 // Middleware to parse JSON bodies
 api.use(bodyParser.json());
 
 let user_command = "command";
-let url = "sample url";
-let sub_links = ["",""];
-let content = "sample content"
+let url = "https://www.oxnotes.com/igcse-mathematics.html";
+
+// let content = "sample content"
 
 
 // Route to get the content
-api.get('/content', (_, res) => {
-  res.json(content);
-});
+// api.get('/content', (_, res) => {
+//   res.json(content);
+// });
 
-webSocket.on('connection', ws => {
-  // this is done that when content is updated there will be a notification to background.js
-  api.post('/content', (req, res) => {
-    let newContent = req.body.content;
-    content = newContent;
-    ws.send('contentUpdated');
-    res.json({ message: 'Content updated successfully' });
-  });
-});
+// webSocket.on('connection', ws => {
+//   // this is done that when content is updated there will be a notification to background.js
+//   api.post('/content', (req, res) => {
+//     let newContent = req.body.content;
+//     content = newContent;
+//     ws.send('contentUpdated');
+//     res.json({ message: 'Content updated successfully' });
+//   });
+// });
 
-
-// Route to get the sub links
-api.get('/sub_links', (_, res) => {
-  res.json(sub_links);
-});
-
-// Route to update the sub links
-api.post('/sub_links', (req, res) => {
-  console.log(req.body)
-  let newSubLinks = req.body.sub_links;
-  sub_links = newSubLinks;
-  res.json({ message: 'Sub links updated successfully' });
-});
 
 // function sendURLToExtension(url) {
 //   chrome.runtime.sendMessage( 'onlnadlphenfaabogkleohajhoidjkjg', { type: 'url_from_node', url: url });
@@ -62,10 +50,13 @@ api.post('/url', (req, res) => {
   console.log(req.body)
   let new_url = req.body.url;
   url = new_url;
-   res.json({ message: 'URL updated successfully' });
+  res.json({ message: 'URL updated successfully' });
+
+  // exec('python ../MERGE/NLP/new_commands.py');
 });
 
   // Execute the Python script using child_process.exec
+  
 //   exec('python NLP/new_commands.py', (error, stdout, stderr) => {
 //     if (error) {
 //       console.error(`exec error: ${error}`);

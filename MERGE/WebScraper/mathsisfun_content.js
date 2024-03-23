@@ -50,8 +50,7 @@ async function emptyFolder(folderLocation) { //an asnyc function (allowing us to
 
 
 async function start() {
-	try {
-			//the beginning of the async function start, allowing the await function to be called
+		//the beginning of the async function start, allowing the await function to be called
 		ds.access(fileName, ds.constants.F_OK, (e) => {
 			//this function checks and logs if the above file exists or not
 			if (e) {
@@ -86,15 +85,15 @@ async function start() {
 
 		await browser.close()
 		//the console logs that the file has been written to and the headless browser is closed
-	}
-	catch (error){
-		console.error("An error occurred with the start() process")
-	}
-
 }
 
-emptyFolder(folderDestination)
-//the folder is emptied first
+try{
+    emptyFolder(folderDestination)
+    //the folder is emptied first
 
-start()
-//the async function start() is called when this file is run
+    start()
+    //the async function start() is called when this file is run
+} catch (error) {
+    error_message = "An error occurred while generating content"
+    fs.writeFile(fileName, error_message)
+}

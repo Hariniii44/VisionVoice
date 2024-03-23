@@ -3,8 +3,6 @@
 // import axios from 'axios';
 // const { spawn } = require('child_process');
 
-const ws = new WebSocket('ws://localhost:8080');
-
 let shouldReadContent = false;
 let currentSection = '';
 
@@ -146,13 +144,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
-
-ws.onmessage = function(event) {
-  if (event.data === 'contentUpdated') {
-    // The content was
-    handleContentUpdated();
-  }
-};
 
  function handleContentUpdated() {
     let content = ""

@@ -17,6 +17,9 @@ def generate(image_dir, output_csv):
 
     # Open CSV file for writing
     with open(output_csv, 'w', newline='') as csvfile:
+        # Initialize generated content variable
+        generated_content = ""
+
         writer = csv.writer(csvfile)
 
         # Write header row to CSV file
@@ -46,11 +49,8 @@ def generate(image_dir, output_csv):
                         generative_models.HarmCategory.HARM_CATEGORY_HARASSMENT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
                     },
                     stream=True,
-                )
-
-                # Initialize generated content variable
-                generated_content = ""
-                
+                )         
+                       
                 i = 0
                 # Iterate over the responses and concatenate the generated content
                 for response in responses:
@@ -59,7 +59,13 @@ def generate(image_dir, output_csv):
                     generated_content += response.text
 
                 # Write image filename and generated content to CSV file
+                if not generated_content:
+                    generated_content = "There were no images on this webpage"
+                    #handles if there was no image
+
                 writer.writerow([filename, generated_content])
+
+    return generated_content
 
 
 # Directory containing input images
@@ -67,12 +73,17 @@ image_dir = "F:/University IIT/Coursework 1 (SDGP)/Implementation/Webscraper/Ver
 
 output = "F:/University IIT/Coursework 1 (SDGP)/Implementation/MERGE/Text_com/content.txt"
 
-# Call the generate function to generate content based on images in the directory and save to CSV file
+generated_content = ""
+
 try:
-    generate(image_dir, output)
+    generated_content = generate(image_dir, output)
 except Exception as e:
-    error = "An error occurred when getting the image explanation"
-    with open(output, 'w') as file:
-        file.write(error)
+    if generated_content:
+        with open(output, 'w') as file:
+            file.write(generated_content)
+    else:
+        error = "An error occurred when getting the image explanation" 
+        with open(output, 'w') as file:
+            file.write(error)
 
 print("Generated content saved to", output)
